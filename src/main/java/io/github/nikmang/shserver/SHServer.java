@@ -1,5 +1,7 @@
 package io.github.nikmang.shserver;
 
+import io.github.nikmang.shserver.handlers.ClientHandler;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
@@ -14,7 +16,7 @@ public class SHServer {
         ServerSocket server = new ServerSocket(5990);
 
         while(true) {
-            pool.execute(new Handler(server.accept()));
+            pool.execute(new ClientHandler(server.accept()));
         }
     }
 }
