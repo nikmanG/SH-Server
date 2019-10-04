@@ -20,6 +20,10 @@ public class User {
         output.writeUTF(String.format("%s: %s%n", sender, message));
     }
 
+    public void close() throws IOException {
+        output.close();
+    }
+
     @Override
     public String toString() {
         return name;
