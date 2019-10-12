@@ -1,5 +1,7 @@
 package io.github.nikmang.shserver.handlers;
 
+import io.github.nikmang.shserver.controllers.GameController;
+import io.github.nikmang.shserver.controllers.MessageController;
 import io.github.nikmang.shserver.User;
 
 import java.io.*;
@@ -9,6 +11,9 @@ import java.util.Set;
 
 public class ClientHandler implements Runnable {
     private static final Set<User> users;
+    private static final MessageController msgContoller;
+    private static final CommandHandler cmdHandler;
+    private static final GameController gameController;
 
     private Socket socket;
     private User user;
@@ -17,6 +22,9 @@ public class ClientHandler implements Runnable {
 
     static {
         users = new HashSet<>();
+        gameController = new GameController();
+        msgContoller = new MessageController(users);
+        cmdHandler = new CommandHandler(msgContoller, gameController);
     }
 
     public ClientHandler(Socket socket) {
@@ -37,7 +45,7 @@ public class ClientHandler implements Runnable {
 
             // Adding user to server
             while (enabled) {
-                user.sendMessage("SERVER", "Enter your username");
+                msgContoller.sendMessageAsServer(user, "Enter your username", false);
 
                 String name = input.readUTF();
 
@@ -45,14 +53,14 @@ public class ClientHandler implements Runnable {
 
                 synchronized (users) {
                     if (!name.equalsIgnoreCase("SERVER") && users.add(user)) {
-                        broadast("SERVER", String.format("%s has joined the server!", user.getName()));
+                        msgContoller.broadcastAsServer(String.format("%s has joined the server!", user.getName()));
 
                         System.out.printf("%s has been added to server%n", name);
                         break;
                     }
                 }
 
-                user.sendMessage("SERVER", "Name already in play");
+                msgContoller.sendMessageAsServer(user, "Name already in play", false);
             }
 
             // Actual server loop
@@ -61,18 +69,22 @@ public class ClientHandler implements Runnable {
                 System.out.printf("%s: %s%n", user.getName(), msg);
 
                 if (msg.startsWith("/")) {
-                    CommandHandler.INSTANCE.runCommand(this, user, msg);
+                    cmdHandler.runCommand(this, msg);
                 } else {
-                    broadast(user.getName(), msg);
+                    msgContoller.broadcast(user, msg);
                 }
             }
         } catch (IOException e) {
             System.out.printf("%s has logged off%n", user.getName());
 
-            broadast("SERVER", String.format("%s has left the server!", user.getName()));
+            msgContoller.broadcastAsServer(String.format("%s has left the server!", user.getName()));
         } finally {
             users.remove(user);
         }
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void closeConnection() throws IOException {
@@ -82,16 +94,6 @@ public class ClientHandler implements Runnable {
 
         close();
         enabled = false;
-    }
-
-    public void broadast(String sender, String message) {
-        for (User user : users) {
-            try {
-                user.sendMessage(sender, message);
-            } catch (IOException e) {
-                System.err.printf("%s could not receive the message", user.getName());
-            }
-        }
     }
 
     private void close() throws IOException {

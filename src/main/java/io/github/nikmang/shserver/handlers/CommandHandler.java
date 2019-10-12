@@ -1,7 +1,9 @@
 package io.github.nikmang.shserver.handlers;
 
-import io.github.nikmang.shserver.User;
+import io.github.nikmang.shserver.controllers.GameController;
+import io.github.nikmang.shserver.controllers.MessageController;
 import io.github.nikmang.shserver.handlers.commands.Command;
+import io.github.nikmang.shserver.handlers.commands.DrawCards;
 import io.github.nikmang.shserver.handlers.commands.Invalid;
 import io.github.nikmang.shserver.handlers.commands.Quit;
 
@@ -10,25 +12,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum CommandHandler {
-
-    INSTANCE;
+public class CommandHandler {
 
     private Map<String, Command> cmds;
     private Command invalid;
 
-    CommandHandler() {
+    public CommandHandler(MessageController messageController, GameController gameController) {
         cmds = new HashMap<>();
-        cmds.put("quit", new Quit());
+        cmds.put("quit", new Quit(messageController));
+        cmds.put("draw", new DrawCards(messageController, gameController));
 
-        invalid = new Invalid();
+        invalid = new Invalid(messageController);
     }
 
-    public void runCommand(ClientHandler handler, User user, String cmd) throws IOException {
+    public void runCommand(ClientHandler handler, String cmd) throws IOException {
         String[] parts = cmd.split("\\s");
 
         Command target = cmds.getOrDefault(parts[0].substring(1), invalid);
 
-        target.execute(handler, user, Arrays.stream(parts).filter(x -> !x.equals(parts[0])).toArray(String[]::new));
+        target.execute(handler, Arrays.stream(parts).filter(x -> !x.equals(parts[0])).toArray(String[]::new));
     }
 }
