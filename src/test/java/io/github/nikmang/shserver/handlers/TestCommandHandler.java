@@ -13,7 +13,7 @@ import java.io.IOException;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class CommandHandlerTests {
+public class TestCommandHandler {
 
     private CommandHandler testHandler;
     private MessageController mockMessageController;

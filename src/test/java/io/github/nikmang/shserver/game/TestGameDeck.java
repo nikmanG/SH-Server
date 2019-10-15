@@ -1,4 +1,4 @@
 package io.github.nikmang.shserver.game;
 
-public class GameDeckTests {
+public class TestGameDeck {
 }

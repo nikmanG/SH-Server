@@ -9,7 +9,7 @@ import java.net.Socket;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
-public class ClientHandlerTests {
+public class TestClientHandler {
 
     private ClientHandler testClientHandler;
 

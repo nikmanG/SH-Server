@@ -1,4 +1,4 @@
 package io.github.nikmang.shserver.handlers.commands;
 
-public class DrawCardsTests {
+public class TestQuit {
 }
