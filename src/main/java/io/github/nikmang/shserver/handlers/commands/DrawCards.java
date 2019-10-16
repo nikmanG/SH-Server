@@ -28,7 +28,7 @@ public class DrawCards extends Command{
 
         List<GameDeck.Card> drawnCards = gameController.getCardsInPlay();
 
-        getMessageController().sendMessageAsServer(user, printInLine(drawnCards), true);
+        this.getMessageController().sendMessageAsServer(user, printInLine(drawnCards), true);
     }
 
     //This may need to be improved. If I never actually use the print method in Card, that is
@@ -38,7 +38,7 @@ public class DrawCards extends Command{
         List<String[]> splitCards = cards.stream().map(c -> c.toCardPrint().split("\n")).collect(Collectors.toList());
         List<String> recompiled = new ArrayList<>();
 
-        int strLen = splitCards.get(0)[0].length();
+        int strLen = splitCards.get(0)[1].length();
 
         for(int i = 0; i < splitCards.get(0).length; i++) {
             final int index = i;
@@ -50,9 +50,9 @@ public class DrawCards extends Command{
         StringBuilder sb = new StringBuilder();
 
         for(int i = 1; i <= splitCards.size(); i++) {
-            String sidePadding = "%1$" + (Math.max(0, (strLen-3)/2)) + "s\t";
+            String sidePadding = "%1$" + (Math.max(0, (strLen-3)/2.)) + "s";
 
-            sb.append(sidePadding).append("[").append(i).append("]").append(sidePadding);
+            sb.append(sidePadding).append("[").append(i).append("]").append(sidePadding).append("\t");
         }
 
         recompiled.add(String.format(sb.toString(), ""));
