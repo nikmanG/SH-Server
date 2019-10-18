@@ -23,6 +23,7 @@ public class MessageController {
 
     public void sendMessage(User sender, User recipient, String message) {
         sendMessage(sender.getName(), recipient, message, false);
+        sendMessage(sender.getName(), sender, message, false);
     }
 
     public void sendMessageAsServer(User recipient, String message, boolean headless) {
