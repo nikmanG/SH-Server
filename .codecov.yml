@@ -1,3 +1,0 @@
-ignore:
-  - "src/main/java/io/github/nikmang/shserver/SHServer.java"
-  - "src/main/java/io/github/nikmang/shserver/User.java"
