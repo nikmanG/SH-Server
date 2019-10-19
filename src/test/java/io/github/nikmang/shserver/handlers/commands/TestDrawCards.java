@@ -35,6 +35,8 @@ public class TestDrawCards {
         testDrawCardsCommand = new DrawCards(mockMessageController, mockGameController);
 
         when(mockClientHandler.getUser()).thenReturn(testUser);
+        when(mockGameController.getPresident()).thenReturn(testUser);
+        when(mockGameController.getChancellor()).thenReturn(testUser);
     }
 
     @Test
@@ -69,6 +71,40 @@ public class TestDrawCards {
                         " ---------\n" +
                         "    [1]    \t"),
                         eq(true));
+    }
+
+    @Test
+    public void testWhenPresidentIsNotSet() throws IOException {
+        //Given
+        when(mockGameController.getPresident()).thenReturn(null);
+
+        //When
+        testDrawCardsCommand.execute(mockClientHandler, new String[0]);
+
+        //Then
+        verify(mockMessageController, times(1)).sendMessageAsServer(
+                eq(testUser),
+                eq("Need to wait for president and chancellor to be set before drawing"),
+                eq(false));
+
+        verify(mockGameController, never()).getCardsInPlay();
+    }
+
+    @Test
+    public void testWhenPresidentIsNotUser() throws IOException {
+        //Given
+        when(mockGameController.getPresident()).thenReturn(new User("test-user2", null));
+
+        //When
+        testDrawCardsCommand.execute(mockClientHandler, new String[0]);
+
+        //Then
+        verify(mockMessageController, times(1)).sendMessageAsServer(
+                eq(testUser),
+                eq("You must be president or chancellor to view cards"),
+                eq(false));
+
+        verify(mockGameController, never()).getCardsInPlay();
     }
 
     @Test

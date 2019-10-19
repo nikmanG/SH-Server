@@ -26,9 +26,24 @@ public class DrawCards extends Command {
     public void execute(ClientHandler handler, String[] args) throws IOException {
         User user = handler.getUser();
 
+        if (gameController.getPresident() == null || gameController.getChancellor() == null) {
+            getMessageController().sendMessageAsServer(
+                    user,
+                    "Need to wait for president and chancellor to be set before drawing",
+                    false);
+
+
+            return;
+        }
+
         //TODO: chancellor check too dependent on current round state
         if (!gameController.getPresident().equals(user)) {
-            getMessageController().sendMessageAsServer(user, "You must be president or chancellor to view cards", false);
+            getMessageController().sendMessageAsServer(
+                    user,
+                    "You must be president or chancellor to view cards",
+                    false);
+
+            return;
         }
 
         List<GameDeck.Card> drawnCards = gameController.getCardsInPlay();
