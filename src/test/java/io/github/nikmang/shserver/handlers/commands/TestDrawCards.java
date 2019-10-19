@@ -7,8 +7,6 @@ import io.github.nikmang.shserver.game.GameDeck;
 import io.github.nikmang.shserver.handlers.ClientHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -19,7 +17,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-@ExtendWith(MockitoExtension.class)
 public class TestDrawCards {
 
     private ClientHandler mockClientHandler;
