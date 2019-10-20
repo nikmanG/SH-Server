@@ -35,18 +35,20 @@ public class GameDeck {
 
         List<Card> cards = new LinkedList<>();
 
-        for(int i=0; i<Math.min(amount, cardDeck.size()); i++) {
+        int deckSize = cardDeck.size();
+
+        for(int i=0; i<Math.min(amount, deckSize); i++) {
             cards.add(getCard());
         }
 
         return cards;
     }
 
-    public synchronized void addCardToDiscardPile(Card card) {
+    public void addCardToDiscardPile(Card card) {
         discardPile.add(card);
     }
 
-    private synchronized void generateDeck() {
+    private void generateDeck() {
         List<Card> tempList = new ArrayList<>();
 
         // This should only occur once per game, but could throw it into a separate method if need be

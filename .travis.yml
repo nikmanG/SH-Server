@@ -1,0 +1,14 @@
+language: java
+dist: xenial
+os:
+  - linux
+jdk:
+  - openjdk8
+#  - oraclejdk8
+  - oraclejdk11
+  - openjdk10
+  - openjdk11
+
+script: "mvn clean test verify"
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
