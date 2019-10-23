@@ -42,26 +42,25 @@ public class ClientHandler implements Runnable {
         try {
             DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
             user = new User("", outputStream);
+            String name;
+            boolean enabled;
 
+            msgContoller.sendMessageAsServer(user, "Enter your username", false);
             // Adding user to server
-            while (enabled) {
-                msgContoller.sendMessageAsServer(user, "Enter your username", false);
+            do {
+                name = input.readUTF();
+                enabled = attemptRegister(name);
 
-                String name = input.readUTF();
-
-                user = new User(name, outputStream);
-
-                synchronized (users) {
-                    if (!name.equalsIgnoreCase("SERVER") && users.add(user)) {
-                        msgContoller.broadcastAsServer(String.format("%s has joined the server!", user.getName()));
-
-                        System.out.printf("%s has been added to server%n", name);
-                        break;
-                    }
+                if (!enabled) {
+                    msgContoller.sendMessageAsServer(
+                            user,
+                            "Name already in play or not valid.\nMust be alphanumeric and optionally contain an underscore.",
+                            false);
                 }
+            } while(!enabled);
 
-                msgContoller.sendMessageAsServer(user, "Name already in play", false);
-            }
+            msgContoller.updateUserList(String.format("%s has joined the server!", user.getName()));
+            System.out.printf("%s has been added to server%n", name);
 
             // Actual server loop
             while (enabled) {
@@ -76,17 +75,44 @@ public class ClientHandler implements Runnable {
             }
         } catch (IOException e) {
             System.out.printf("%s has logged off%n", user.getName());
-
-            msgContoller.broadcastAsServer(String.format("%s has left the server!", user.getName()));
         } finally {
             users.remove(user);
+            msgContoller.updateUserList(String.format("%s has left the server!", user.getName()));
         }
     }
 
+    /**
+     * Retrieves the user for this instance.
+     *
+     * @return user instance.
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Attempts to register the user for the clienthandler with given name.
+     *
+     * @param name Chosen name of the player. Case sensitive.
+     * @return <b>true</b> if name is alphanumeric (with optional underscore) and is unique to the game.
+     */
+    public boolean attemptRegister(String name) {
+        user.setName(name);
+
+        if(!name.matches("^\\w{1,16}$") || name.equalsIgnoreCase("SERVER") ) {
+            return false;
+        }
+
+        synchronized (users) {
+            return users.add(user);
+        }
+    }
+
+    /**
+     * Closes all connections the user has and removes them from the list of active players.
+     *
+     * @throws IOException
+     */
     public void closeConnection() throws IOException {
         synchronized (users) {
             users.remove(user);

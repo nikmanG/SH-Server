@@ -20,12 +20,12 @@ public class User {
         return name;
     }
 
-    public void sendMessage(String sender, String message) throws IOException {
-        output.writeUTF(String.format("%s: %s%n", sender, message));
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void sendAnonymousMessage(String message) throws IOException {
-        output.writeUTF(String.format("%s%n", message));
+    public void sendMessage(JsonPacketBuilder packet) throws IOException {
+        output.writeUTF(packet.build());
     }
 
     public void close() throws IOException {

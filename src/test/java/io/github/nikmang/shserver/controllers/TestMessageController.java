@@ -1,5 +1,6 @@
 package io.github.nikmang.shserver.controllers;
 
+import io.github.nikmang.shserver.JsonPacketBuilder;
 import io.github.nikmang.shserver.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,10 +22,7 @@ public class TestMessageController {
     public void setupOnce() {
         userList = new ArrayList<>();
         User mockUser = mock(User.class);
-//        when(mockUser.getName()).thenReturn("test-user");
-
         User mockUser2 = mock(User.class);
-
         User mockUser3 = mock(User.class);
 
         userList.addAll(Arrays.asList(mockUser, mockUser2, mockUser3));
@@ -40,9 +38,12 @@ public class TestMessageController {
         testMessageController.sendMessage(userList.get(0), userList.get(1), "TEST");
 
         //Then
-        verify(userList.get(0), times(1)).sendMessage(eq("test-user"), eq("TEST"));
-        verify(userList.get(1), times(1)).sendMessage(eq("test-user"), eq("TEST"));
-        verify(userList.get(2), never()).sendMessage(eq("test-user"), eq("TEST"));
+        verify(userList.get(0), times(1))
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("test-user")));
+        verify(userList.get(1), times(1))
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("test-user")));
+        verify(userList.get(2), never())
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("test-user")));
     }
 
     @Test
@@ -52,9 +53,12 @@ public class TestMessageController {
         testMessageController.sendMessageAsServer(userList.get(0), "TEST", false);
 
         //Then
-        verify(userList.get(0), times(1)).sendMessage(eq("SERVER"), eq("TEST"));
-        verify(userList.get(1), never()).sendMessage(eq("SERVER"), eq("TEST"));
-        verify(userList.get(2), never()).sendMessage(eq("SERVER"), eq("TEST"));
+        verify(userList.get(0), times(1))
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("SERVER")));
+        verify(userList.get(1), never())
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("SERVER")));
+        verify(userList.get(2), never())
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("SERVER")));
     }
 
     @Test
@@ -64,9 +68,12 @@ public class TestMessageController {
         testMessageController.sendMessageAsServer(userList.get(0), "TEST", true);
 
         //Then
-        verify(userList.get(0), times(1)).sendAnonymousMessage(eq("TEST"));
-        verify(userList.get(1), never()).sendAnonymousMessage(eq("TEST"));
-        verify(userList.get(2), never()).sendAnonymousMessage(eq("TEST"));
+        verify(userList.get(0), times(1))
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST")));
+        verify(userList.get(1), never())
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST")));
+        verify(userList.get(2), never())
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST")));
     }
 
     @Test
@@ -78,9 +85,12 @@ public class TestMessageController {
         testMessageController.broadcast(userList.get(0), "TEST");
 
         //Then
-        verify(userList.get(0), times(1)).sendMessage(eq("test-user"), eq("TEST"));
-        verify(userList.get(1), times(1)).sendMessage(eq("test-user"), eq("TEST"));
-        verify(userList.get(2), times(1)).sendMessage(eq("test-user"), eq("TEST"));
+        verify(userList.get(0), times(1))
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("test-user")));
+        verify(userList.get(1), times(1))
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("test-user")));
+        verify(userList.get(2), times(1))
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("test-user")));
     }
 
     @Test
@@ -90,8 +100,11 @@ public class TestMessageController {
         testMessageController.broadcastAsServer("TEST");
 
         //Then
-        verify(userList.get(0), times(1)).sendMessage(eq("SERVER"), eq("TEST"));
-        verify(userList.get(1), times(1)).sendMessage(eq("SERVER"), eq("TEST"));
-        verify(userList.get(2), times(1)).sendMessage(eq("SERVER"), eq("TEST"));
+        verify(userList.get(0), times(1))
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("SERVER")));
+        verify(userList.get(1), times(1))
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("SERVER")));
+        verify(userList.get(2), times(1))
+                .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("SERVER")));
     }
 }

@@ -1,4 +1,4 @@
-package io.github.nikmang.shserver.handlers.commands;
+package io.github.nikmang.shserver.commands;
 
 import io.github.nikmang.shserver.User;
 import io.github.nikmang.shserver.controllers.GameController;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -40,18 +41,6 @@ public class TestDrawCards {
     }
 
     @Test
-    public void testFailWhenNoCards() {
-        //Given
-        when(mockGameController.getCardsInPlay()).thenReturn(Collections.emptyList());
-
-        //When
-        assertThrows(AssertionError.class, () -> testDrawCardsCommand.execute(mockClientHandler, new String[0]));
-
-        //Then
-        //throws error
-    }
-
-    @Test
     public void testProperFormatSingleCard() throws IOException {
         //Given
         when(mockGameController.getCardsInPlay()).thenReturn(Collections.singletonList(GameDeck.Card.LIBERAL));
@@ -61,16 +50,9 @@ public class TestDrawCards {
 
         //Then
         verify(mockMessageController, times(1))
-                .sendMessageAsServer(eq(testUser),
-                        eq(" ---------\n" +
-                        "|L        |\n" +
-                        "|         |\n" +
-                        "| LIBERAL |\n" +
-                        "|         |\n" +
-                        "|        L|\n" +
-                        " ---------\n" +
-                        "    [1]    \t"),
-                        eq(true));
+                .sendCards(eq(testUser),
+                        eq(Collections.singletonList(GameDeck.Card.LIBERAL)),
+                        eq(null));
     }
 
     @Test
@@ -118,15 +100,8 @@ public class TestDrawCards {
 
         //Then
         verify(mockMessageController, times(1))
-                .sendMessageAsServer(eq(testUser),
-                        eq(" ---------\t ---------\t ---------\n" +
-                                "|L        |\t|F        |\t|L        |\n" +
-                                "|         |\t|         |\t|         |\n" +
-                                "| LIBERAL |\t| FASCIST |\t| LIBERAL |\n" +
-                                "|         |\t|         |\t|         |\n" +
-                                "|        L|\t|        F|\t|        L|\n" +
-                                " ---------\t ---------\t ---------\n" +
-                                "    [1]    \t    [2]    \t    [3]    \t"),
-                        eq(true));
+                .sendCards(eq(testUser),
+                        eq(Arrays.asList(GameDeck.Card.LIBERAL, GameDeck.Card.FASCIST, GameDeck.Card.LIBERAL)),
+                        eq(null));
     }
 }

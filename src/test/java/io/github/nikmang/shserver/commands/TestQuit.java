@@ -1,4 +1,4 @@
-package io.github.nikmang.shserver.handlers.commands;
+package io.github.nikmang.shserver.commands;
 
 import io.github.nikmang.shserver.User;
 import io.github.nikmang.shserver.controllers.MessageController;

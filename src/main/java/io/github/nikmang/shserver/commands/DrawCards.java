@@ -1,4 +1,4 @@
-package io.github.nikmang.shserver.handlers.commands;
+package io.github.nikmang.shserver.commands;
 
 import io.github.nikmang.shserver.User;
 import io.github.nikmang.shserver.controllers.GameController;
@@ -36,7 +36,7 @@ public class DrawCards extends Command {
             return;
         }
 
-        //TODO: chancellor check too dependent on current round state
+//        TODO: chancellor check too dependent on current round state
         if (!gameController.getPresident().equals(user)) {
             getMessageController().sendMessageAsServer(
                     user,
@@ -48,7 +48,7 @@ public class DrawCards extends Command {
 
         List<GameDeck.Card> drawnCards = gameController.getCardsInPlay();
 
-        this.getMessageController().sendMessageAsServer(user, printInLine(drawnCards), true);
+        this.getMessageController().sendCards(user, drawnCards, null);
     }
 
     //This may need to be improved. If I never actually use the print method in Card, that is
