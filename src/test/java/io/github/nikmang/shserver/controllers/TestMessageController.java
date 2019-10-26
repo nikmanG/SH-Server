@@ -2,6 +2,7 @@ package io.github.nikmang.shserver.controllers;
 
 import io.github.nikmang.shserver.JsonPacketBuilder;
 import io.github.nikmang.shserver.User;
+import io.github.nikmang.shserver.game.GameDeck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.*;
 
@@ -19,7 +21,7 @@ public class TestMessageController {
     private List<User> userList;
 
     @BeforeEach
-    public void setupOnce() {
+    public void setup() {
         userList = new ArrayList<>();
         User mockUser = mock(User.class);
         User mockUser2 = mock(User.class);
@@ -106,5 +108,36 @@ public class TestMessageController {
                 .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("SERVER")));
         verify(userList.get(2), times(1))
                 .sendMessage(eq(new JsonPacketBuilder().withMessage("TEST").withSender("SERVER")));
+    }
+
+    @Test
+    public void testUpdatePlayerListWithMessage() throws IOException {
+        //Given
+        //When
+        testMessageController.updateUserList("TEST");
+
+        //Then
+        verify(userList.get(0), times(1)).sendMessage(
+                eq(new JsonPacketBuilder()
+                        .withMessage("TEST")
+                        .withFollowingUsers(userList.stream().map(User::getName).collect(Collectors.toList())))
+        );
+    }
+
+    @Test
+    public void testSendCards() throws IOException {
+        //Given
+        List<GameDeck.Card> cards = Arrays.asList(GameDeck.Card.FASCIST, GameDeck.Card.LIBERAL, GameDeck.Card.FASCIST);
+
+        //When
+        testMessageController.sendCards(userList.get(0), cards, "TEST");
+
+        //Then
+        verify(userList.get(0), times(1)).sendMessage(
+                eq(new JsonPacketBuilder()
+                        .withSender("SERVER")
+                        .withMessage("TEST")
+                        .withFollowingCards(Arrays.asList(GameDeck.Card.FASCIST, GameDeck.Card.LIBERAL, GameDeck.Card.FASCIST)))
+        );
     }
 }

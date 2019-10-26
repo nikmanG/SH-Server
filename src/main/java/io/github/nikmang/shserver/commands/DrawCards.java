@@ -50,33 +50,4 @@ public class DrawCards extends Command {
 
         this.getMessageController().sendCards(user, drawnCards, null);
     }
-
-    //This may need to be improved. If I never actually use the print method in Card, that is
-    private String printInLine(List<GameDeck.Card> cards) {
-        assert cards.size() > 0;
-
-        List<String[]> splitCards = cards.stream().map(c -> c.toCardPrint().split("\n")).collect(Collectors.toList());
-        List<String> recompiled = new ArrayList<>();
-
-        int strLen = splitCards.get(0)[1].length();
-
-        for (int i = 0; i < splitCards.get(0).length; i++) {
-            final int index = i;
-
-            recompiled.add(splitCards.stream().map(c -> c[index]).collect(Collectors.joining("\t")));
-        }
-
-        //add numbers to the bottom of card
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 1; i <= splitCards.size(); i++) {
-            String sidePadding = "%1$" + (Math.max(0, (strLen - 3) / 2.)) + "s";
-
-            sb.append(sidePadding).append("[").append(i).append("]").append(sidePadding).append("\t");
-        }
-
-        recompiled.add(String.format(sb.toString(), ""));
-
-        return String.join("\n", recompiled);
-    }
 }
