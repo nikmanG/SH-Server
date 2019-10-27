@@ -5,6 +5,7 @@
 **Notes**: 
 - this was mostly setup stuff. Getting the project together mainly, next steps will be more about actual game design... I hope.
 
+[[VIDEO]](https://youtu.be/Zsqq53stDzQ)
 ## 0.0.2
 **Current State**:
 
