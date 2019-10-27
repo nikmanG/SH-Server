@@ -1,8 +1,8 @@
 # SH-Server
 ## Obligatory Badges
-| Travis Integration | Code Coverage | License |
-| ------------------ | ------------- | ------- |
-| [![Build Status](https://travis-ci.org/nikmanG/SH-Server.svg?branch=master)](https://travis-ci.org/nikmanG/SH-Server) | [![Code Coverage](https://codecov.io/gh/nikmanG/SH-Server/branch/master/graph/badge.svg)](https://codecov.io/gh/nikmanG/SH-Server) | [![License: CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/) |
+| Travis Integration | Code Coverage | License | JavaDocs |
+| ------------------ | ------------- | ------- | -------- |
+| [![Build Status](https://travis-ci.org/nikmanG/SH-Server.svg?branch=master)](https://travis-ci.org/nikmanG/SH-Server) | [![Code Coverage](https://codecov.io/gh/nikmanG/SH-Server/branch/master/graph/badge.svg)](https://codecov.io/gh/nikmanG/SH-Server) | [![License: CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/) | [![JavaDocs](https://img.shields.io/badge/javadoc-0.0.2-orange)](https://nikmanG.github.io/SH-Server/) |
 
 ## What this is
 This is a chat game version of [Secret Hitler](https://www.secrethitler.com/). Very beloved game at work and if you don't know what it is - it's essentially Mafia with slightly different rules.
