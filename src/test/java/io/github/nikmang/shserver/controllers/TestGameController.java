@@ -1,13 +1,12 @@
 package io.github.nikmang.shserver.controllers;
 
-import io.github.nikmang.shserver.User;
-import io.github.nikmang.shserver.game.GameDeck;
+import io.github.nikmang.shserver.client.User;
+import io.github.nikmang.shserver.game.Card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.lang.instrument.UnmodifiableClassException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +28,7 @@ public class TestGameController {
     public void testGetCardsInPlayFresh() {
         //Given
         //When
-        List<GameDeck.Card> cards = testGameController.getCardsInPlay();
+        List<Card> cards = testGameController.getCardsInPlay();
 
         //Then
         assertEquals(3, cards.size());
@@ -39,8 +38,8 @@ public class TestGameController {
     public void testGetCardsInPlayCache() {
         //Given
         //When
-        List<GameDeck.Card> cards = testGameController.getCardsInPlay();
-        List<GameDeck.Card> cards2 = testGameController.getCardsInPlay();
+        List<Card> cards = testGameController.getCardsInPlay();
+        List<Card> cards2 = testGameController.getCardsInPlay();
 
         //Then
         assertEquals(cards, cards2);
@@ -50,7 +49,7 @@ public class TestGameController {
     public void testGetCardsInPlayUnmodifiable() {
         //Given
         //When
-        List<GameDeck.Card> cards = testGameController.getCardsInPlay();
+        List<Card> cards = testGameController.getCardsInPlay();
 
         //Then
         assertThrows(UnsupportedOperationException.class, () -> cards.remove(0));
@@ -59,13 +58,13 @@ public class TestGameController {
     @Test
     public void testNewDeckGetCardsInPlay() {
         //Given
-        List<GameDeck.Card> cards = testGameController.getCardsInPlay();
+        List<Card> cards = testGameController.getCardsInPlay();
         testGameController.removeCardFromPlay(2);
         testGameController.removeCardFromPlay(1);
         testGameController.removeCardFromPlay(0);
 
         //When
-        List<GameDeck.Card> testCards = testGameController.getCardsInPlay();
+        List<Card> testCards = testGameController.getCardsInPlay();
 
         //Then
         assertNotSame(cards, testCards);
@@ -86,7 +85,7 @@ public class TestGameController {
     @Test
     public void testRemoveCardValid() {
         //Given
-        List<GameDeck.Card> cards = new ArrayList<>(testGameController.getCardsInPlay());
+        List<Card> cards = new ArrayList<>(testGameController.getCardsInPlay());
 
         //When
         testGameController.removeCardFromPlay(1);

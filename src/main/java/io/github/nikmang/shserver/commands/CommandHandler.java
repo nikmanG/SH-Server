@@ -1,11 +1,8 @@
-package io.github.nikmang.shserver.handlers;
+package io.github.nikmang.shserver.commands;
 
 import io.github.nikmang.shserver.controllers.GameController;
 import io.github.nikmang.shserver.controllers.MessageController;
-import io.github.nikmang.shserver.commands.Command;
-import io.github.nikmang.shserver.commands.DrawCards;
-import io.github.nikmang.shserver.commands.Invalid;
-import io.github.nikmang.shserver.commands.Quit;
+import io.github.nikmang.shserver.client.ClientHandler;
 
 import java.io.IOException;
 import java.util.Arrays;

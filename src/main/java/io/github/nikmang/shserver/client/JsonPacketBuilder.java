@@ -1,8 +1,8 @@
-package io.github.nikmang.shserver;
+package io.github.nikmang.shserver.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.github.nikmang.shserver.game.GameDeck;
+import io.github.nikmang.shserver.game.Card;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class JsonPacketBuilder {
 
     private String sender;
     private String message;
-    private List<GameDeck.Card> cards;
+    private List<Card> cards;
     private List<String> users;
 
     public JsonPacketBuilder(){
@@ -29,7 +29,7 @@ public class JsonPacketBuilder {
         return this;
     }
 
-    public JsonPacketBuilder withFollowingCards(List<GameDeck.Card> cards) {
+    public JsonPacketBuilder withFollowingCards(List<Card> cards) {
         this.cards = cards;
         return this;
     }

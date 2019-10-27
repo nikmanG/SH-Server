@@ -1,6 +1,8 @@
-package io.github.nikmang.shserver.handlers;
+package io.github.nikmang.shserver.commands;
 
-import io.github.nikmang.shserver.User;
+import io.github.nikmang.shserver.client.ClientHandler;
+import io.github.nikmang.shserver.client.User;
+import io.github.nikmang.shserver.commands.CommandHandler;
 import io.github.nikmang.shserver.controllers.GameController;
 import io.github.nikmang.shserver.controllers.MessageController;
 import org.junit.jupiter.api.BeforeEach;

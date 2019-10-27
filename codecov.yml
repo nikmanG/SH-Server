@@ -1,5 +1,4 @@
 ignore:
   - "src/main/java/io/github/nikmang/shserver/SHServer.java"
-  - "src/main/java/io/github/nikmang/shserver/User.java"
-  - "src/main/java/io/github/nikmang/shserver/handlers/ClientHandler.java"
+  - "src/main/java/io/github/nikmang/shserver/client/User.java"
   - "src/main/java/io/github/nikmang/shserver/commands/Invalid.java"

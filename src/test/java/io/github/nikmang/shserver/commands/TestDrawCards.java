@@ -1,15 +1,14 @@
 package io.github.nikmang.shserver.commands;
 
-import io.github.nikmang.shserver.User;
+import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.controllers.GameController;
 import io.github.nikmang.shserver.controllers.MessageController;
-import io.github.nikmang.shserver.game.GameDeck;
-import io.github.nikmang.shserver.handlers.ClientHandler;
+import io.github.nikmang.shserver.game.Card;
+import io.github.nikmang.shserver.client.ClientHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -43,7 +42,7 @@ public class TestDrawCards {
     @Test
     public void testProperFormatSingleCard() throws IOException {
         //Given
-        when(mockGameController.getCardsInPlay()).thenReturn(Collections.singletonList(GameDeck.Card.LIBERAL));
+        when(mockGameController.getCardsInPlay()).thenReturn(Collections.singletonList(Card.LIBERAL));
 
         //When
         testDrawCardsCommand.execute(mockClientHandler, new String[0]);
@@ -51,7 +50,7 @@ public class TestDrawCards {
         //Then
         verify(mockMessageController, times(1))
                 .sendCards(eq(testUser),
-                        eq(Collections.singletonList(GameDeck.Card.LIBERAL)),
+                        eq(Collections.singletonList(Card.LIBERAL)),
                         eq(null));
     }
 
@@ -93,7 +92,7 @@ public class TestDrawCards {
     public void testProperFormatManyCards() throws IOException {
         //Given
         when(mockGameController.getCardsInPlay())
-                .thenReturn(Arrays.asList(GameDeck.Card.LIBERAL, GameDeck.Card.FASCIST, GameDeck.Card.LIBERAL));
+                .thenReturn(Arrays.asList(Card.LIBERAL, Card.FASCIST, Card.LIBERAL));
 
         //When
         testDrawCardsCommand.execute(mockClientHandler, new String[0]);
@@ -101,7 +100,7 @@ public class TestDrawCards {
         //Then
         verify(mockMessageController, times(1))
                 .sendCards(eq(testUser),
-                        eq(Arrays.asList(GameDeck.Card.LIBERAL, GameDeck.Card.FASCIST, GameDeck.Card.LIBERAL)),
+                        eq(Arrays.asList(Card.LIBERAL, Card.FASCIST, Card.LIBERAL)),
                         eq(null));
     }
 }

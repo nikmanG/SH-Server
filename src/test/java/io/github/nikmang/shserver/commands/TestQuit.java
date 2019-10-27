@@ -1,8 +1,8 @@
 package io.github.nikmang.shserver.commands;
 
-import io.github.nikmang.shserver.User;
+import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.controllers.MessageController;
-import io.github.nikmang.shserver.handlers.ClientHandler;
+import io.github.nikmang.shserver.client.ClientHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

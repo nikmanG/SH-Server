@@ -1,8 +1,8 @@
 package io.github.nikmang.shserver.controllers;
 
-import io.github.nikmang.shserver.JsonPacketBuilder;
-import io.github.nikmang.shserver.User;
-import io.github.nikmang.shserver.game.GameDeck;
+import io.github.nikmang.shserver.client.JsonPacketBuilder;
+import io.github.nikmang.shserver.client.User;
+import io.github.nikmang.shserver.game.Card;
 
 import java.io.IOException;
 import java.util.List;
@@ -67,7 +67,7 @@ public class MessageController {
      * @param cards The cards that are to be sent.
      * @param message Optional accompanying message.
      */
-    public void sendCards(User recipient, List<GameDeck.Card> cards, String message) {
+    public void sendCards(User recipient, List<Card> cards, String message) {
         JsonPacketBuilder packet = new JsonPacketBuilder()
                 .withFollowingCards(cards);
 

@@ -1,8 +1,8 @@
 package io.github.nikmang.shserver.controllers;
 
-import io.github.nikmang.shserver.JsonPacketBuilder;
-import io.github.nikmang.shserver.User;
-import io.github.nikmang.shserver.game.GameDeck;
+import io.github.nikmang.shserver.client.JsonPacketBuilder;
+import io.github.nikmang.shserver.client.User;
+import io.github.nikmang.shserver.game.Card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -127,7 +127,7 @@ public class TestMessageController {
     @Test
     public void testSendCards() throws IOException {
         //Given
-        List<GameDeck.Card> cards = Arrays.asList(GameDeck.Card.FASCIST, GameDeck.Card.LIBERAL, GameDeck.Card.FASCIST);
+        List<Card> cards = Arrays.asList(Card.FASCIST, Card.LIBERAL, Card.FASCIST);
 
         //When
         testMessageController.sendCards(userList.get(0), cards, "TEST");
@@ -137,7 +137,7 @@ public class TestMessageController {
                 eq(new JsonPacketBuilder()
                         .withSender("SERVER")
                         .withMessage("TEST")
-                        .withFollowingCards(Arrays.asList(GameDeck.Card.FASCIST, GameDeck.Card.LIBERAL, GameDeck.Card.FASCIST)))
+                        .withFollowingCards(Arrays.asList(Card.FASCIST, Card.LIBERAL, Card.FASCIST)))
         );
     }
 }

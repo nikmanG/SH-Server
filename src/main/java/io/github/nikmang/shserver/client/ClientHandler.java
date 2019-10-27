@@ -1,14 +1,19 @@
-package io.github.nikmang.shserver.handlers;
+package io.github.nikmang.shserver.client;
 
+import io.github.nikmang.shserver.commands.CommandHandler;
 import io.github.nikmang.shserver.controllers.GameController;
 import io.github.nikmang.shserver.controllers.MessageController;
-import io.github.nikmang.shserver.User;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Runnable that is controlling each client thread.
+ * Also contains master set of users.
+ */
 public class ClientHandler implements Runnable {
     private static final Set<User> users;
     private static final MessageController msgContoller;
@@ -27,12 +32,20 @@ public class ClientHandler implements Runnable {
         cmdHandler = new CommandHandler(msgContoller, gameController);
     }
 
+    //TODO: this only exists for testing, may need to change some stuff around
+    public static Set<User> getUsers() {
+        return Collections.unmodifiableSet(users);
+    }
+
     public ClientHandler(Socket socket) {
         this.socket = socket;
         this.enabled = true;
 
         try {
+            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
             this.input = new DataInputStream(socket.getInputStream());
+
+            this.user = new User("", outputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,10 +53,7 @@ public class ClientHandler implements Runnable {
 
     public void run() {
         try {
-            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
-            user = new User("", outputStream);
             String name;
-            boolean enabled;
 
             msgContoller.sendMessageAsServer(user, "Enter your username", false);
             // Adding user to server
@@ -75,6 +85,7 @@ public class ClientHandler implements Runnable {
             }
         } catch (IOException e) {
             System.out.printf("%s has logged off%n", user.getName());
+            e.printStackTrace();
         } finally {
             users.remove(user);
             msgContoller.updateUserList(String.format("%s has left the server!", user.getName()));

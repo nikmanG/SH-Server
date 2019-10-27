@@ -1,6 +1,4 @@
-package io.github.nikmang.shserver;
-
-import io.github.nikmang.shserver.game.Party;
+package io.github.nikmang.shserver.client;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

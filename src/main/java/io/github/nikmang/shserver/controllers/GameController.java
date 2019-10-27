@@ -1,6 +1,7 @@
 package io.github.nikmang.shserver.controllers;
 
-import io.github.nikmang.shserver.User;
+import io.github.nikmang.shserver.client.User;
+import io.github.nikmang.shserver.game.Card;
 import io.github.nikmang.shserver.game.GameDeck;
 import io.github.nikmang.shserver.game.GameState;
 
@@ -8,13 +9,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-
+/**
+ * Class responsible for controlling the game.
+ * This maintains individual gameflow (game state, cards, leader roles).
+ */
 public class GameController {
 
     private GameDeck gameDeck;
     private GameState gameState;
 
-    private List<GameDeck.Card> cardsInPlay;
+    private List<Card> cardsInPlay;
 
     private User president;
     private User chancellor;
@@ -31,7 +35,7 @@ public class GameController {
      *
      * @return unmodifiable list of current cards in play.
      */
-    public List<GameDeck.Card> getCardsInPlay() {
+    public List<Card> getCardsInPlay() {
         if(cardsInPlay.isEmpty()) {
             cardsInPlay = gameDeck.getCards(3);
         }
@@ -49,7 +53,7 @@ public class GameController {
         if(index >= cardsInPlay.size() || index < 0)
             return false;
 
-        GameDeck.Card c = cardsInPlay.remove(index);
+        Card c = cardsInPlay.remove(index);
 
         gameDeck.addCardToDiscardPile(c);
 
@@ -76,21 +80,6 @@ public class GameController {
         return setPositionofPower(user, (u) -> chancellor = u);
     }
 
-    private boolean setPositionofPower(User user, Consumer<User> action) {
-        if(president != null) {
-            if(user.equals(president))
-                return false;
-        }
-
-        if(chancellor != null) {
-            if(chancellor.equals(user))
-                return false;
-        }
-
-        action.accept(user);
-        return true;
-    }
-
     public GameState getGameState() {
         return gameState;
     }
@@ -105,5 +94,20 @@ public class GameController {
 
     public User getChancellor() {
         return chancellor;
+    }
+
+    private boolean setPositionofPower(User user, Consumer<User> action) {
+        if(president != null) {
+            if(user.equals(president))
+                return false;
+        }
+
+        if(chancellor != null) {
+            if(chancellor.equals(user))
+                return false;
+        }
+
+        action.accept(user);
+        return true;
     }
 }
