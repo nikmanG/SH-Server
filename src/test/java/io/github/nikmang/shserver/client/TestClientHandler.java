@@ -151,22 +151,13 @@ public class TestClientHandler {
         ExecutorService pool = Executors.newFixedThreadPool(500);
 
         for(int i=0; i<100; i++) {
-            final int nameItr = i;
+            ClientHandler c = new ClientHandler(setupMockSocket());
+            c.attemptRegister("test_user" + i);
 
-            pool.execute(() -> {
-                try {
-                    ClientHandler c = new ClientHandler(setupMockSocket());
-                    c.attemptRegister("test_user" + nameItr);
-
-                    clients.add(c);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            clients.add(c);
         }
 
-        Thread.sleep(1000L);
-        
+
         //When
         for(int i=0; i<50; i++) {
             final int nameItr = i;

@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Focused on sending JSON messages to users.
+ * Should be used instead of manually calling {@link User#sendMessage(JsonPacketBuilder)}
+ */
 public class MessageController {
 
     private Set<User> users;
