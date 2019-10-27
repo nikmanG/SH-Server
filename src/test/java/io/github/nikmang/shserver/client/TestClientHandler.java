@@ -165,6 +165,8 @@ public class TestClientHandler {
             });
         }
 
+        Thread.sleep(1000L);
+        
         //When
         for(int i=0; i<50; i++) {
             final int nameItr = i;
