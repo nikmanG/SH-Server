@@ -21,10 +21,10 @@ public class TestGameDeck {
     public void testDefaultDeckGeneration() {
         //Given
         //When
-        List<GameDeck.Card> allCards = testDeck.getCards(17);
+        List<Card> allCards = testDeck.getCards(17);
 
-        long liberal = allCards.stream().filter(x -> x == GameDeck.Card.LIBERAL).count();
-        long fascist = allCards.stream().filter(x -> x == GameDeck.Card.FASCIST).count();
+        long liberal = allCards.stream().filter(x -> x == Card.LIBERAL).count();
+        long fascist = allCards.stream().filter(x -> x == Card.FASCIST).count();
 
         //Then
         assertEquals(17, allCards.size());
@@ -36,8 +36,8 @@ public class TestGameDeck {
     public void testGetCard() {
         //Given
         //When
-        GameDeck.Card card = testDeck.getCard();
-        List<GameDeck.Card> allCards = testDeck.getCards(17);
+        Card card = testDeck.getCard();
+        List<Card> allCards = testDeck.getCards(17);
 
         //Then
         assertEquals(16, allCards.size());
@@ -48,26 +48,12 @@ public class TestGameDeck {
     public void testGetCardAfterReplenish() {
         //Given
         //When
-        GameDeck.Card card = testDeck.getCard();
+        Card card = testDeck.getCard();
         testDeck.addCardToDiscardPile(card);
-        List<GameDeck.Card> allCards = testDeck.getCards(17);
+        List<Card> allCards = testDeck.getCards(17);
 
         //Then
         assertEquals(17, allCards.size());
         assertNotNull(card);
-    }
-
-    @Test
-    public void testCardAppearance() {
-        //Given
-        //When
-        String liberalCard = GameDeck.Card.LIBERAL.toCardPrint();
-        String fascistCard = GameDeck.Card.FASCIST.toCardPrint();
-
-        //Then
-        assertEquals(" ---------\n|F        |\n|         |\n| FASCIST |\n|         |\n|        F|\n ---------",
-                fascistCard);
-        assertEquals(" ---------\n|L        |\n|         |\n| LIBERAL |\n|         |\n|        L|\n ---------",
-                liberalCard);
     }
 }

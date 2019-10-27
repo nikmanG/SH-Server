@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"io.github.nikmang.shserver"},{"l":"io.github.nikmang.shserver.client"},{"l":"io.github.nikmang.shserver.commands"},{"l":"io.github.nikmang.shserver.controllers"},{"l":"io.github.nikmang.shserver.game"}]
