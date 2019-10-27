@@ -6,6 +6,9 @@ import io.github.nikmang.shserver.client.ClientHandler;
 
 import java.io.IOException;
 
+/**
+ * Called to gracefully close the client from server.
+ */
 public class Quit extends Command {
 
     Quit(MessageController messageController) {

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 /**
  * Focused on sending JSON messages to users.
- * Should be used instead of manually calling {@link User#sendMessage(JsonPacketBuilder)}
+ * Should be used instead of manually calling {@link User#sendMessage(JsonPacketBuilder)}.
  */
 public class MessageController {
 

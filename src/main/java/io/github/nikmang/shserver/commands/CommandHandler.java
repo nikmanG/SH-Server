@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class responsible for running and parsing commands.
+ */
 public class CommandHandler {
 
     private Map<String, Command> cmds;

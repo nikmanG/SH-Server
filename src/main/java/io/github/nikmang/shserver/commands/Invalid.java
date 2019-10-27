@@ -5,6 +5,9 @@ import io.github.nikmang.shserver.client.ClientHandler;
 
 import java.io.IOException;
 
+/**
+ * Called whenever a command that is nonexistent is attempted to be run by a client.
+ */
 public class Invalid extends Command {
 
     Invalid(MessageController messageController) {

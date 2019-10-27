@@ -3,6 +3,9 @@ package io.github.nikmang.shserver.client;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+/**
+ * Output info for client connection.
+ */
 public class User {
     private String name;
     private DataOutputStream output;

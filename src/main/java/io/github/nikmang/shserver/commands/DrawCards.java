@@ -9,6 +9,10 @@ import io.github.nikmang.shserver.client.ClientHandler;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Called on /draw to draw cards.
+ * Performs president and chancellor checks.
+ */
 public class DrawCards extends Command {
 
 

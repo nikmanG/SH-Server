@@ -122,7 +122,7 @@ public class ClientHandler implements Runnable {
     /**
      * Closes all connections the user has and removes them from the list of active players.
      *
-     * @throws IOException
+     * @throws IOException If socket already closed or null.
      */
     public void closeConnection() throws IOException {
         synchronized (users) {

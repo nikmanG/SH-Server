@@ -2,6 +2,10 @@ package io.github.nikmang.shserver.game;
 
 import java.util.*;
 
+/**
+ * Deck for each game.
+ * Actions affect internal deque so for full reset a new GameDeck must be generated.
+ */
 public class GameDeck {
 
     private int liberalCards;

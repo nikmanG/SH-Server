@@ -6,6 +6,9 @@ import io.github.nikmang.shserver.game.Card;
 
 import java.util.List;
 
+/**
+ * Builder for packets that are sent by {@link io.github.nikmang.shserver.controllers.MessageController} to the clients.
+ */
 public class JsonPacketBuilder {
     private transient Gson gson;
 

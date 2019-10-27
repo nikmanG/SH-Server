@@ -46,7 +46,7 @@ public class GameController {
     /**
      * Remove the card at specified index from the game, into the discarded pile.
      *
-     * @param index Index of the card bust be within the list of provided cards (e.g 3 cards means can only choose 0,1,2)
+     * @param index Index of the card bust be within the list of provided cards (e.g 3 cards means can only choose 0,1,2).
      * @return <b>true</b> if index corresponded to a card and could be removed.
      */
     public boolean removeCardFromPlay(int index) {
@@ -64,7 +64,7 @@ public class GameController {
      * Sets the president for the turn.
      *
      * @param user User to be set as president.
-     * @return <b>true</b> if president was set (they were not currently chancellor or president)
+     * @return <b>true</b> if president was set (they were not currently chancellor or president).
      */
     public boolean setPresident(User user) {
         return setPositionofPower(user, (u) -> president = u);
@@ -74,7 +74,7 @@ public class GameController {
      * Sets the chancellor for the turn.
      *
      * @param user User to be set as chancellor.
-     * @return <b>true</b> if chancellor was set (they were not currently chancellor or president)
+     * @return <b>true</b> if chancellor was set (they were not currently chancellor or president).
      */
     public boolean setChancellor(User user) {
         return setPositionofPower(user, (u) -> chancellor = u);
