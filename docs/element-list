@@ -1,5 +1,5 @@
 io.github.nikmang.shserver
 io.github.nikmang.shserver.client
 io.github.nikmang.shserver.commands
-io.github.nikmang.shserver.controllers
 io.github.nikmang.shserver.game
+io.github.nikmang.shserver.game.configurations

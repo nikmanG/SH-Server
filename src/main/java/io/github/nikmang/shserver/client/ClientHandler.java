@@ -1,8 +1,8 @@
 package io.github.nikmang.shserver.client;
 
 import io.github.nikmang.shserver.commands.CommandHandler;
-import io.github.nikmang.shserver.controllers.GameController;
-import io.github.nikmang.shserver.controllers.MessageController;
+import io.github.nikmang.shserver.game.GameController;
+import io.github.nikmang.shserver.MessageController;
 
 import java.io.*;
 import java.net.Socket;

@@ -2,12 +2,13 @@ package io.github.nikmang.shserver.client;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.github.nikmang.shserver.MessageController;
 import io.github.nikmang.shserver.game.Card;
 
 import java.util.List;
 
 /**
- * Builder for packets that are sent by {@link io.github.nikmang.shserver.controllers.MessageController} to the clients.
+ * Builder for packets that are sent by {@link MessageController} to the clients.
  */
 public class JsonPacketBuilder {
     private transient Gson gson;

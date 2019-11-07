@@ -1,7 +1,8 @@
-package io.github.nikmang.shserver.controllers;
+package io.github.nikmang.shserver.game;
 
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.Card;
+import io.github.nikmang.shserver.game.GameController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +15,6 @@ import java.util.List;
 import static junit.framework.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@ExtendWith(MockitoExtension.class)
 public class TestGameController {
 
     private GameController testGameController;

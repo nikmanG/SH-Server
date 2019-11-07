@@ -1,4 +1,4 @@
-package io.github.nikmang.shserver.controllers;
+package io.github.nikmang.shserver.game;
 
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.Card;
@@ -67,7 +67,7 @@ public class GameController {
      * @return <b>true</b> if president was set (they were not currently chancellor or president).
      */
     public boolean setPresident(User user) {
-        return setPositionofPower(user, (u) -> president = u);
+        return setPositionOfPower(user, (u) -> president = u);
     }
 
     /**
@@ -77,7 +77,7 @@ public class GameController {
      * @return <b>true</b> if chancellor was set (they were not currently chancellor or president).
      */
     public boolean setChancellor(User user) {
-        return setPositionofPower(user, (u) -> chancellor = u);
+        return setPositionOfPower(user, (u) -> chancellor = u);
     }
 
     public GameState getGameState() {
@@ -96,7 +96,7 @@ public class GameController {
         return chancellor;
     }
 
-    private boolean setPositionofPower(User user, Consumer<User> action) {
+    private boolean setPositionOfPower(User user, Consumer<User> action) {
         if(president != null) {
             if(user.equals(president))
                 return false;
