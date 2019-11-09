@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -20,6 +22,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class TestDropCard {
 
     private DropCard testDropCard;
@@ -37,6 +40,11 @@ public class TestDropCard {
         testDropCard = new DropCard(mockMessageController, mockGameController);
 
         when(mockClientHandler.getUser()).thenReturn(mockSender);
+
+        when(mockGameController.getPresident()).thenReturn(mockSender);
+        when(mockGameController.getGameState()).thenReturn(GameState.CARD_CHOICE);
+        when(mockGameController.removeCardFromPlay(anyInt())).thenReturn(true);
+        when(mockGameController.getCardsInPlay()).thenReturn(Arrays.asList(Card.LIBERAL, Card.FASCIST, Card.LIBERAL));
     }
 
     @Test
@@ -61,7 +69,6 @@ public class TestDropCard {
     @Test
     public void testInvalidGameState() throws IOException {
         //Given
-        when(mockGameController.getPresident()).thenReturn(mockSender);
         when(mockGameController.getGameState()).thenReturn(GameState.VOTING);
 
         //When
@@ -80,8 +87,6 @@ public class TestDropCard {
     @Test
     public void testNotEnoughCards() throws IOException {
         //Given
-        when(mockGameController.getPresident()).thenReturn(mockSender);
-        when(mockGameController.getGameState()).thenReturn(GameState.CARD_CHOICE);
         when(mockGameController.getCardsInPlay()).thenReturn(Collections.emptyList());
 
         //When
@@ -99,10 +104,6 @@ public class TestDropCard {
     @Test
     public void testNoArguments() throws IOException {
         //Given
-        when(mockGameController.getPresident()).thenReturn(mockSender);
-        when(mockGameController.getGameState()).thenReturn(GameState.CARD_CHOICE);
-        when(mockGameController.getCardsInPlay()).thenReturn(Arrays.asList(Card.LIBERAL, Card.FASCIST, Card.LIBERAL));
-
         //When
         testDropCard.execute(mockClientHandler, new String[0]);
 
@@ -118,10 +119,6 @@ public class TestDropCard {
     @Test
     public void testNotNumber() throws IOException {
         //Given
-        when(mockGameController.getPresident()).thenReturn(mockSender);
-        when(mockGameController.getGameState()).thenReturn(GameState.CARD_CHOICE);
-        when(mockGameController.getCardsInPlay()).thenReturn(Arrays.asList(Card.LIBERAL, Card.FASCIST, Card.LIBERAL));
-
         //When
         testDropCard.execute(mockClientHandler, new String[]{"a"});
 
@@ -137,9 +134,7 @@ public class TestDropCard {
     @Test
     public void testWrongNumber() throws IOException {
         //Given
-        when(mockGameController.getPresident()).thenReturn(mockSender);
-        when(mockGameController.getGameState()).thenReturn(GameState.CARD_CHOICE);
-        when(mockGameController.getCardsInPlay()).thenReturn(Arrays.asList(Card.LIBERAL, Card.FASCIST, Card.LIBERAL));
+        when(mockGameController.removeCardFromPlay(-6)).thenReturn(false);
 
         //When
         testDropCard.execute(mockClientHandler, new String[]{"-5"});
@@ -157,12 +152,7 @@ public class TestDropCard {
     public void testWorksSingle() throws IOException {
         //Given
         User chancellor = new User("CHANCELLOR", null);
-
-        when(mockGameController.getPresident()).thenReturn(mockSender);
         when(mockGameController.getChancellor()).thenReturn(chancellor);
-        when(mockGameController.getGameState()).thenReturn(GameState.CARD_CHOICE);
-        when(mockGameController.removeCardFromPlay(anyInt())).thenReturn(true);
-        when(mockGameController.getCardsInPlay()).thenReturn(Arrays.asList(Card.LIBERAL, Card.FASCIST, Card.LIBERAL));
 
         //When
         testDropCard.execute(mockClientHandler, new String[]{"2"});
