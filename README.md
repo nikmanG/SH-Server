@@ -33,3 +33,6 @@ There is virtually no security in this, like as mentioned before data transfer i
 I am going to try do some devlogs of this on YouTube and save details in [LOGS.md](LOGS.md). 
 The videos will address the technical side while the Log page will just be a brief explanation of what the game state currently is.
 Since this isn't a production project, my main focus will be the development itself.
+
+## How to set up the game
+You can't. It's currently still in glorified socket chat state.

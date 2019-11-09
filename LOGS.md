@@ -10,3 +10,4 @@
 
 **Notes**: 
 - One major delivery change was to emphasise that the server is really only logic so will send JSON instead of strings back to client, and let client do rendering.
+- Still it isn't really a _game_. While it will have commands and majority of the abilities, there is still a lack of order.

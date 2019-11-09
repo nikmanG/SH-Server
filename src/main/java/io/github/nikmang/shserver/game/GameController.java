@@ -66,7 +66,7 @@ public class GameController {
      * @param user User to be set as president.
      * @return <b>true</b> if president was set (they were not currently chancellor or president).
      */
-    public boolean setPresident(User user) {
+    public synchronized boolean setPresident(User user) {
         return setPositionOfPower(user, (u) -> president = u);
     }
 
@@ -76,7 +76,7 @@ public class GameController {
      * @param user User to be set as chancellor.
      * @return <b>true</b> if chancellor was set (they were not currently chancellor or president).
      */
-    public boolean setChancellor(User user) {
+    public synchronized boolean setChancellor(User user) {
         return setPositionOfPower(user, (u) -> chancellor = u);
     }
 
@@ -88,11 +88,11 @@ public class GameController {
         this.gameState = gameState;
     }
 
-    public User getPresident() {
+    public synchronized User getPresident() {
         return president;
     }
 
-    public User getChancellor() {
+    public synchronized User getChancellor() {
         return chancellor;
     }
 

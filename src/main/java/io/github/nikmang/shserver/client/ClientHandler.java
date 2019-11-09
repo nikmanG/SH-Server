@@ -54,7 +54,8 @@ public class ClientHandler implements Runnable {
     public void run() {
         try {
             String name;
-
+            msgContoller.sendMessageAsServer(user, "Welcome to Secret Hitler Chat Edition.\n" +
+                    "Original game by Goat, Wolf, & Cabbage: https://www.secrethitler.com/", true);
             msgContoller.sendMessageAsServer(user, "Enter your username", false);
             // Adding user to server
             do {
