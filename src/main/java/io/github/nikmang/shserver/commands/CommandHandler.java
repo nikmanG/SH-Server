@@ -27,6 +27,8 @@ public class CommandHandler {
         cmds = new HashMap<>();
         cmds.put("quit", new Quit(messageController));
         cmds.put("draw", new DrawCards(messageController, gameController));
+        cmds.put("inspect", new DrawCards(messageController, gameController));
+        cmds.put("party", new InspectPartyCard(messageController, gameController));
         cmds.put("drop", new DropCard(messageController, gameController));
 
         invalid = new Invalid(messageController);

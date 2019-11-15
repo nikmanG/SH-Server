@@ -11,7 +11,7 @@ public class User {
     private DataOutputStream output;
     private Party politicalParty;
 
-    public User(String name, DataOutputStream output) {
+    User(String name, DataOutputStream output) {
         this.name = name;
         this.output = output;
         this.politicalParty = Party.NONE;
@@ -19,6 +19,24 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    /**
+     * Returns {@link Party} of user.
+     * If user is {@link Party#HITLER} then {@link Party#FASCIST} is returned.
+     * To check if player is hitler, call {@linkplain #isHitler()}.
+     *
+     * @return Political party of user.
+     */
+    public Party getPoliticalParty() {
+        if(politicalParty == Party.HITLER)
+            return Party.FASCIST;
+
+        return politicalParty;
+    }
+
+    public boolean isHitler() {
+        return politicalParty == Party.HITLER;
     }
 
     public void setName(String name) {

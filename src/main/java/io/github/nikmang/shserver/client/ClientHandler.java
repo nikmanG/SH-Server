@@ -27,7 +27,7 @@ public class ClientHandler implements Runnable {
 
     static {
         users = new HashSet<>();
-        gameController = new GameController();
+        gameController = new GameController(5); //TODO: dynamically allocate it
         msgContoller = new MessageController(users);
         cmdHandler = new CommandHandler(msgContoller, gameController);
     }

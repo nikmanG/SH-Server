@@ -13,7 +13,7 @@ import java.io.IOException;
  * Chancellor must have already been chosen for this to work.
  * Must supply argument (1, 2, 3) of card you want to remove.
  */
-public class DropCard extends Command {
+class DropCard extends Command {
 
     private GameController gameController;
 

@@ -1,13 +1,13 @@
 package io.github.nikmang.shserver.game;
 
+import io.github.nikmang.shserver.client.ClientHandler;
+import io.github.nikmang.shserver.client.Party;
 import io.github.nikmang.shserver.client.User;
-import io.github.nikmang.shserver.game.Card;
-import io.github.nikmang.shserver.game.GameDeck;
-import io.github.nikmang.shserver.game.GameState;
 import io.github.nikmang.shserver.game.configurations.PlayerConfigurationFactory;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -88,6 +88,29 @@ public class GameController {
         }
 
         return currentEffect;
+    }
+
+    /**
+     * Gets the political party of a given user.
+     * Search for name is case insensitive.
+     * Transitions game state to {@link GameState#VOTING}.
+     *
+     * @param userName User name of the target player.
+     * @return {@link Party} of target user. If no user found then {@link Party#NONE} is returned.
+     */
+    public Party inspectUserPartyCard(String userName) {
+        Optional<User> u = ClientHandler
+                .getUsers()
+                .stream()
+                .filter(x -> x.getName().equalsIgnoreCase(userName))
+                .findFirst();
+
+        if(u.isPresent()) {
+            gameState = GameState.VOTING;
+            return u.get().getPoliticalParty();
+        }
+
+        return Party.NONE;
     }
 
     /**
