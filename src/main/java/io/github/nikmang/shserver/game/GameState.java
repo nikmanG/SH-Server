@@ -10,5 +10,6 @@ public enum GameState {
     END,
     VOTING,
     SPECIAL,
+    CARD_DROP,
     CARD_CHOICE
 }

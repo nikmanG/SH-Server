@@ -39,7 +39,7 @@ public class GameBoard {
      * @param card Card type to be played.
      * @return game board effect that is specified in {@link PlayerConfiguration}.
      */
-    public GameBoardEffect playPiece(Card card) {
+    GameBoardEffect playPiece(Card card) {
         deadlock = 0;
 
         if(card == Card.LIBERAL) {
@@ -83,7 +83,7 @@ public class GameBoard {
     /**
      * Increments deadlock count.
      */
-    public void incrementDeadlock() {
+    void incrementDeadlock() {
         deadlock++;
     }
 }

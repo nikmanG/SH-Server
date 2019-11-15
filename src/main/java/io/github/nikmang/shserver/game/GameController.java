@@ -4,6 +4,7 @@ import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.Card;
 import io.github.nikmang.shserver.game.GameDeck;
 import io.github.nikmang.shserver.game.GameState;
+import io.github.nikmang.shserver.game.configurations.PlayerConfigurationFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,21 +12,30 @@ import java.util.function.Consumer;
 
 /**
  * Class responsible for controlling the game.
- * This maintains individual gameflow (game state, cards, leader roles).
+ * This maintains individual gameflow (game state, game board, cards, leader roles).
  */
 public class GameController {
 
     private GameDeck gameDeck;
+    private GameBoard gameBoard;
     private GameState gameState;
+    private GameBoardEffect currentEffect;
 
     private List<Card> cardsInPlay;
 
     private User president;
     private User chancellor;
 
-    {
+    /**
+     * Create a game controller instance with specified player count for game board onfiguration.
+     *
+     * @param playerCount Amount of players in the game.
+     */
+    public GameController(int playerCount){
         gameDeck = new GameDeck();
+        gameBoard = new GameBoard(PlayerConfigurationFactory.getConfigurationOnPlayerCount(playerCount));
         gameState = GameState.LOBBY;
+        currentEffect = GameBoardEffect.NONE;
         cardsInPlay = Collections.emptyList();
     }
 
@@ -45,6 +55,7 @@ public class GameController {
 
     /**
      * Remove the card at specified index from the game, into the discarded pile.
+     * Updates the game state to {@link GameState#CARD_CHOICE}.
      *
      * @param index Index of the card bust be within the list of provided cards (e.g 3 cards means can only choose 0,1,2).
      * @return <b>true</b> if index corresponded to a card and could be removed.
@@ -57,7 +68,26 @@ public class GameController {
 
         gameDeck.addCardToDiscardPile(c);
 
+        gameState = GameState.CARD_CHOICE;
         return true;
+    }
+
+    /**
+     * Play a card and update active effect.
+     * If successful, sets the game state to {@link GameState#SPECIAL}.
+     * 
+     * @param index Index of the card that is found in {@link #getCardsInPlay()}.
+     * @return The {@link GameBoardEffect} for given play.
+     */
+    public GameBoardEffect playCard(int index) {
+        if(index < cardsInPlay.size() && index > 0) {
+            Card c = cardsInPlay.remove(index);
+
+            currentEffect = gameBoard.playPiece(c);
+            gameState = GameState.SPECIAL;
+        }
+
+        return currentEffect;
     }
 
     /**
@@ -94,6 +124,10 @@ public class GameController {
 
     public synchronized User getChancellor() {
         return chancellor;
+    }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 
     private boolean setPositionOfPower(User user, Consumer<User> action) {
