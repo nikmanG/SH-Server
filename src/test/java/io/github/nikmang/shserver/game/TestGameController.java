@@ -21,7 +21,7 @@ public class TestGameController {
 
     @BeforeEach
     public void setup() {
-        testGameController = new GameController();
+        testGameController = new GameController(5);
     }
 
     @Test

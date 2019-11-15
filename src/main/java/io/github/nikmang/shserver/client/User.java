@@ -11,7 +11,7 @@ public class User {
     private DataOutputStream output;
     private Party politicalParty;
 
-    User(String name, DataOutputStream output) {
+    public User(String name, DataOutputStream output) {
         this.name = name;
         this.output = output;
         this.politicalParty = Party.NONE;
