@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static junit.framework.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -222,5 +220,26 @@ public class TestGameController {
         //Then
         assertEquals(Party.LIBERAL, p1);
         assertEquals(Party.NONE, p2);
+    }
+
+    @Test
+    public void testPlayCardInvalid() {
+        //Given
+        //When
+        testGameController.playCard(99);
+
+        //Then
+        assertEquals(GameState.LOBBY, testGameController.getGameState());
+    }
+
+    @Test
+    public void testPlayCardValid() {
+        //Given
+        testGameController.getCardsInPlay();
+        //When
+        testGameController.playCard(1);
+
+        //Then
+        assertEquals(GameState.SPECIAL, testGameController.getGameState());
     }
 }

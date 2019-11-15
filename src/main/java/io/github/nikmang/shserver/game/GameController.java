@@ -7,7 +7,6 @@ import io.github.nikmang.shserver.game.configurations.PlayerConfigurationFactory
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -129,10 +128,6 @@ public class GameController {
 
     public GameState getGameState() {
         return gameState;
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
     }
 
     public synchronized User getPresident() {
