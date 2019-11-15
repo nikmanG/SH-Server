@@ -47,6 +47,10 @@ public class User {
         output.writeUTF(packet.build());
     }
 
+    public void setPoliticalParty(Party party) {
+        this.politicalParty = party;
+    }
+
     public void close() throws IOException {
         output.close();
     }

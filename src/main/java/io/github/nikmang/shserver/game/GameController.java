@@ -92,22 +92,16 @@ public class GameController {
 
     /**
      * Gets the political party of a given user.
-     * Search for name is case insensitive.
+     * Search for name using {@link ClientHandler#getUserByName(String)}.
      * Transitions game state to {@link GameState#VOTING}.
      *
-     * @param userName User name of the target player.
+     * @param user the target user for the action.
      * @return {@link Party} of target user. If no user found then {@link Party#NONE} is returned.
      */
-    public Party inspectUserPartyCard(String userName) {
-        Optional<User> u = ClientHandler
-                .getUsers()
-                .stream()
-                .filter(x -> x.getName().equalsIgnoreCase(userName))
-                .findFirst();
-
-        if(u.isPresent()) {
+    public Party inspectUserPartyCard(User user) {
+        if(user != null) {
             gameState = GameState.VOTING;
-            return u.get().getPoliticalParty();
+            return user.getPoliticalParty();
         }
 
         return Party.NONE;

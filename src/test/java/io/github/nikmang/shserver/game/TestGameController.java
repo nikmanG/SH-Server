@@ -1,5 +1,6 @@
 package io.github.nikmang.shserver.game;
 
+import io.github.nikmang.shserver.client.Party;
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.Card;
 import io.github.nikmang.shserver.game.GameController;
@@ -108,7 +109,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addPresidentSuccessfullOverride() {
+    public void testAddPresidentSuccessfullOverride() {
         //Given
         User user = new User("test-user", null);
         User user2 = new User("test-user2", null);
@@ -123,7 +124,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addPresidentAlreadyPresident() {
+    public void testAddPresidentAlreadyPresident() {
         //Given
         User user = new User("test-user", null);
         testGameController.setPresident(user);
@@ -137,7 +138,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addPresidentAlreadyChancellor() {
+    public void testAddPresidentAlreadyChancellor() {
         //Given
         User user = new User("test-user", null);
         testGameController.setChancellor(user);
@@ -152,7 +153,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addChancellorSuccessful() {
+    public void testAddChancellorSuccessful() {
         //Given
         User user = new User("test-user", null);
 
@@ -165,7 +166,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addChancellorSuccessfullOverride() {
+    public void testAddChancellorSuccessfullOverride() {
         //Given
         User user = new User("test-user", null);
         User user2 = new User("test-user2", null);
@@ -180,7 +181,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addChancellorAlreadyChancellor() {
+    public void testAddChancellorAlreadyChancellor() {
         //Given
         User user = new User("test-user", null);
         testGameController.setChancellor(user);
@@ -194,7 +195,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addChancellorAlreadyPresident() {
+    public void testAddChancellorAlreadyPresident() {
         //Given
         User user = new User("test-user", null);
         testGameController.setPresident(user);
@@ -206,5 +207,20 @@ public class TestGameController {
         assertNull(testGameController.getChancellor());
         assertEquals(user, testGameController.getPresident());
         assertFalse(b);
+    }
+
+    @Test
+    public void testInspectCardUser() {
+        //Given
+        User u = new User("test_user", null);
+        u.setPoliticalParty(Party.LIBERAL);
+
+        //When
+        Party p1 = testGameController.inspectUserPartyCard(u);
+        Party p2 = testGameController.inspectUserPartyCard(null);
+
+        //Then
+        assertEquals(Party.LIBERAL, p1);
+        assertEquals(Party.NONE, p2);
     }
 }

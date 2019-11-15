@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -35,6 +36,14 @@ public class ClientHandler implements Runnable {
     //TODO: this only exists for testing, may need to change some stuff around
     public static Set<User> getUsers() {
         return Collections.unmodifiableSet(users);
+    }
+
+    public static User getUserByName(String userName) {
+        return ClientHandler
+                .getUsers()
+                .stream()
+                .filter(x -> x.getName().equalsIgnoreCase(userName))
+                .findFirst().orElse(null);
     }
 
     public ClientHandler(Socket socket) {

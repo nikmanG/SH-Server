@@ -28,7 +28,7 @@ class InspectPartyCard extends Command {
     }
 
     @Override
-    public void execute(ClientHandler clientHandler, String[] args) throws IOException {
+    public synchronized void execute(ClientHandler clientHandler, String[] args) throws IOException {
         if(gameController.getGameState() != GameState.SPECIAL) {
             getMessageController().sendMessageAsServer(
                     clientHandler.getUser(),
@@ -48,7 +48,7 @@ class InspectPartyCard extends Command {
         if(args.length < 1) {
             getMessageController().sendMessageAsServer(
                     clientHandler.getUser(),
-                    "Must supply target user name.",
+                    "You must supply target user name.",
                     false);
             return;
         }
@@ -61,7 +61,7 @@ class InspectPartyCard extends Command {
             return;
         }
 
-        Party p = gameController.inspectUserPartyCard(args[0]);
+        Party p = gameController.inspectUserPartyCard(ClientHandler.getUserByName(args[0]));
 
         if(p == Party.NONE) {
             getMessageController().sendMessageAsServer(
