@@ -1,7 +1,7 @@
-package io.github.nikmang.shserver;
+package io.github.nikmang.shserver.messaging;
 
-import io.github.nikmang.shserver.MessageController;
-import io.github.nikmang.shserver.client.JsonPacketBuilder;
+import io.github.nikmang.shserver.messaging.MessageController;
+import io.github.nikmang.shserver.messaging.JsonPacketBuilder;
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.Card;
 import org.junit.jupiter.api.BeforeEach;

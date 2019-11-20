@@ -1,14 +1,13 @@
 package io.github.nikmang.shserver.commands;
 
-import io.github.nikmang.shserver.MessageController;
-import io.github.nikmang.shserver.client.ClientHandler;
-import io.github.nikmang.shserver.client.Party;
+import io.github.nikmang.shserver.client.ClientController;
 import io.github.nikmang.shserver.client.User;
+import io.github.nikmang.shserver.messaging.MessageController;
+import io.github.nikmang.shserver.client.Party;
 import io.github.nikmang.shserver.game.GameController;
 import io.github.nikmang.shserver.game.GameState;
 
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * Called to inspect an individuals card.
@@ -28,18 +27,18 @@ class InspectPartyCard extends Command {
     }
 
     @Override
-    public synchronized void execute(ClientHandler clientHandler, String[] args) throws IOException {
+    public synchronized void execute(User user, String[] args) throws IOException {
         if(gameController.getGameState() != GameState.SPECIAL) {
             getMessageController().sendMessageAsServer(
-                    clientHandler.getUser(),
+                    user,
                     "Not in the correct game state currently. Try again.",
                     false);
             return;
         }
 
-        if(!gameController.getPresident().equals(clientHandler.getUser())) {
+        if(!gameController.getPresident().equals(user)) {
             getMessageController().sendMessageAsServer(
-                    clientHandler.getUser(),
+                    user,
                     "You must be president to view others cards.",
                     false);
             return;
@@ -47,38 +46,38 @@ class InspectPartyCard extends Command {
 
         if(args.length < 1) {
             getMessageController().sendMessageAsServer(
-                    clientHandler.getUser(),
+                    user,
                     "You must supply target user name.",
                     false);
             return;
         }
 
-        if(args[0].equalsIgnoreCase(clientHandler.getUser().getName())) {
+        if(args[0].equalsIgnoreCase(user.getName())) {
             getMessageController().sendMessageAsServer(
-                    clientHandler.getUser(),
+                    user,
                     "Don't waste this on yourself...",
                     false);
             return;
         }
 
-        Party p = gameController.inspectUserPartyCard(ClientHandler.getUserByName(args[0]));
+        Party p = gameController.inspectUserPartyCard(ClientController.INSTANCE.getUserByName(args[0]));
 
         if(p == Party.NONE) {
             getMessageController().sendMessageAsServer(
-                    clientHandler.getUser(),
+                    user,
                     "User not found try again.",
                     false);
             return;
         }
 
         getMessageController().sendMessageAsServer(
-                clientHandler.getUser(),
+                user,
                 String.format("%s's party card is: %s", args[0], p),
                 false);
 
         getMessageController().broadcastAsServer(String.format(
                 "%s has inspected %s's party card",
-                clientHandler.getUser().getName(),
+                user.getName(),
                 args[0]));
     }
 }

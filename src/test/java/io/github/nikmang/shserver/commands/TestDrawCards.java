@@ -2,7 +2,7 @@ package io.github.nikmang.shserver.commands;
 
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.GameController;
-import io.github.nikmang.shserver.MessageController;
+import io.github.nikmang.shserver.messaging.MessageController;
 import io.github.nikmang.shserver.game.Card;
 import io.github.nikmang.shserver.client.ClientHandler;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,8 +1,7 @@
-package io.github.nikmang.shserver.client;
+package io.github.nikmang.shserver.messaging;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.github.nikmang.shserver.MessageController;
 import io.github.nikmang.shserver.game.Card;
 
 import java.util.List;

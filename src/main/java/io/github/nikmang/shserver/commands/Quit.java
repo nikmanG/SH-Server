@@ -1,8 +1,8 @@
 package io.github.nikmang.shserver.commands;
 
-import io.github.nikmang.shserver.MessageController;
+import io.github.nikmang.shserver.client.ClientController;
+import io.github.nikmang.shserver.messaging.MessageController;
 import io.github.nikmang.shserver.client.User;
-import io.github.nikmang.shserver.client.ClientHandler;
 
 import java.io.IOException;
 
@@ -16,13 +16,11 @@ class Quit extends Command {
     }
     
     @Override
-    public void execute(ClientHandler handler, String[] args) throws IOException {
-        User executor = handler.getUser();
+    public void execute(User user, String[] args) throws IOException {
+        this.getMessageController().sendMessageAsServer(user, "You have left the server", false);
+        this.getMessageController().broadcastAsServer(String.format("%s has left the server!", user.getName()));
 
-        this.getMessageController().sendMessageAsServer(executor, "You have left the server", false);
-        this.getMessageController().broadcastAsServer(String.format("%s has left the server!", executor.getName()));
-
-        handler.closeConnection();
+        ClientController.INSTANCE.closeConnection(user);
     }
 
 }

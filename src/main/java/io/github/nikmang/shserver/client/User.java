@@ -1,5 +1,7 @@
 package io.github.nikmang.shserver.client;
 
+import io.github.nikmang.shserver.messaging.JsonPacketBuilder;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 

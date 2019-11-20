@@ -5,3 +5,4 @@
 
 ## Stretch Goals
 - [ ] Move javadoc creation to be done through Travis instead of manual.
+- [ ] Add timer and start to game (dynamic gameboard size allocation).

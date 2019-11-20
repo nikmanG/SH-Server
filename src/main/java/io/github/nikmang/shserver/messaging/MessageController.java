@@ -1,6 +1,5 @@
-package io.github.nikmang.shserver;
+package io.github.nikmang.shserver.messaging;
 
-import io.github.nikmang.shserver.client.JsonPacketBuilder;
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.Card;
 
