@@ -38,9 +38,9 @@ public class CommandHandler {
      * Attempts to run a command server-side and returns JSON response (if applicable) to the sender.
      *
      * @param handler Handler of the sender.
-     * @param cmd Command without the preceding slash
+     * @param cmd Command without the preceding slash.
      *
-     * @throws IOException
+     * @throws IOException thrown if receiver of message cannot receive it.
      */
     public void runCommand(ClientHandler handler, String cmd) throws IOException {
         String[] parts = cmd.split("\\s");

@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Runnable that is controlling each client thread.
+ * Runnable that is controlling each client thread.<br>
  * Also contains master set of users.
  */
 public class ClientHandler implements Runnable {
@@ -33,11 +33,22 @@ public class ClientHandler implements Runnable {
         cmdHandler = new CommandHandler(msgContoller, gameController);
     }
 
-    //TODO: this only exists for testing, may need to change some stuff around
+    /**
+     * Retrieves an immutable set of current players.<br>
+     * TODO: this only exists for testing, may need to change some stuff around.
+     *
+     * @return Immutable hashset of the players in the game.
+     */
     public static Set<User> getUsers() {
         return Collections.unmodifiableSet(users);
     }
 
+    /**
+     * Retrieves a user by their username. The name is case insensitive.
+     *
+     * @param userName User name of targeted user.
+     * @return {@link User} object of the target. <b>null</b> if no player found.
+     */
     public static User getUserByName(String userName) {
         return ClientHandler
                 .getUsers()
@@ -60,6 +71,9 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * Runs the main loop between server and client.
+     */
     public void run() {
         try {
             String name;

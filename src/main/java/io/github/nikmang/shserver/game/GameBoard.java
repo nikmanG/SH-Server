@@ -3,6 +3,9 @@ package io.github.nikmang.shserver.game;
 import io.github.nikmang.shserver.client.Party;
 import io.github.nikmang.shserver.game.configurations.PlayerConfiguration;
 
+/**
+ * The gameboard instance used for playing and keeping track of various positions.
+ */
 public class GameBoard {
 
     private transient final int targetLiberal;
@@ -52,14 +55,13 @@ public class GameBoard {
     }
 
     /**
-     * Get the winner for the game.
-     * Based on if current card played count is equal to the target count.
-     *
-     * For statistical purposes {@link Party#HITLER} is also a winner if {@link Party#FASCIST} wins.
-     *
-     * Otherwise {@link Party#NONE} is returned.
-     *
-     * @return Party of the winner of the game
+     * Get the winner for the game.<br>
+     * Based on if current card played count is equal to the target count.<br>
+     *<br>
+     * For statistical purposes {@link Party#HITLER} is also a winner if {@link Party#FASCIST} wins.<br>
+     * Otherwise {@link Party#NONE} is returned.<br>
+     *<br>
+     * @return Party of the winner of the game.
      */
     public Party getWinner() {
         if(fascistCount == targetFascist)

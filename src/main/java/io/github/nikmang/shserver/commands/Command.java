@@ -17,10 +17,10 @@ public abstract class Command {
     }
 
     /**
-     * Called when person sends up a command request (message beginning with /)
-     *
-     * Example:
-     *  <b>/msg user Hello World</b>
+     * Called when person sends up a command request (message beginning with /)<br>
+     *<br>
+     * Example:<br>
+     *  <b>/msg user Hello World</b><br>
      *  Above will try find command with <i>msg</i> name and will pass in arguments ['user', 'Hello', 'World']
      *
      * @param clientHandler The respective client handler of the sender of the command.
