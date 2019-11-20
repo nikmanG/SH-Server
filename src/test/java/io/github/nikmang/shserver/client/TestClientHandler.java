@@ -18,8 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -176,6 +175,26 @@ public class TestClientHandler {
 
         //Then
         assertEquals(50, ClientHandler.getUsers().size());
+    }
+
+    @Test
+    public void testGetUserByName() throws IOException {
+        //Given
+        for(int i=0; i<5; i++) {
+            ClientHandler c = new ClientHandler(setupMockSocket());
+            c.attemptRegister("test_user" + i);
+
+            clients.add(c);
+        }
+
+        //When
+        User valid = ClientHandler.getUserByName("test_user1");
+        User invalid = ClientHandler.getUserByName("test_user100");
+
+        //Then
+        assertNull(invalid);
+        assertNotNull(valid);
+        assertEquals("test_user1", valid.getName());
     }
 
     private Socket setupMockSocket() throws IOException {

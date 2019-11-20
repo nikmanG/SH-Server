@@ -1,27 +1,26 @@
-package io.github.nikmang.shserver.controllers;
+package io.github.nikmang.shserver.game;
 
+import io.github.nikmang.shserver.client.Party;
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.Card;
+import io.github.nikmang.shserver.game.GameController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static junit.framework.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@ExtendWith(MockitoExtension.class)
 public class TestGameController {
 
     private GameController testGameController;
 
     @BeforeEach
     public void setup() {
-        testGameController = new GameController();
+        testGameController = new GameController(5);
     }
 
     @Test
@@ -108,7 +107,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addPresidentSuccessfullOverride() {
+    public void testAddPresidentSuccessfullOverride() {
         //Given
         User user = new User("test-user", null);
         User user2 = new User("test-user2", null);
@@ -123,7 +122,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addPresidentAlreadyPresident() {
+    public void testAddPresidentAlreadyPresident() {
         //Given
         User user = new User("test-user", null);
         testGameController.setPresident(user);
@@ -137,7 +136,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addPresidentAlreadyChancellor() {
+    public void testAddPresidentAlreadyChancellor() {
         //Given
         User user = new User("test-user", null);
         testGameController.setChancellor(user);
@@ -152,7 +151,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addChancellorSuccessful() {
+    public void testAddChancellorSuccessful() {
         //Given
         User user = new User("test-user", null);
 
@@ -165,7 +164,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addChancellorSuccessfullOverride() {
+    public void testAddChancellorSuccessfullOverride() {
         //Given
         User user = new User("test-user", null);
         User user2 = new User("test-user2", null);
@@ -180,7 +179,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addChancellorAlreadyChancellor() {
+    public void testAddChancellorAlreadyChancellor() {
         //Given
         User user = new User("test-user", null);
         testGameController.setChancellor(user);
@@ -194,7 +193,7 @@ public class TestGameController {
     }
 
     @Test
-    public void addChancellorAlreadyPresident() {
+    public void testAddChancellorAlreadyPresident() {
         //Given
         User user = new User("test-user", null);
         testGameController.setPresident(user);
@@ -206,5 +205,41 @@ public class TestGameController {
         assertNull(testGameController.getChancellor());
         assertEquals(user, testGameController.getPresident());
         assertFalse(b);
+    }
+
+    @Test
+    public void testInspectCardUser() {
+        //Given
+        User u = new User("test_user", null);
+        u.setPoliticalParty(Party.LIBERAL);
+
+        //When
+        Party p1 = testGameController.inspectUserPartyCard(u);
+        Party p2 = testGameController.inspectUserPartyCard(null);
+
+        //Then
+        assertEquals(Party.LIBERAL, p1);
+        assertEquals(Party.NONE, p2);
+    }
+
+    @Test
+    public void testPlayCardInvalid() {
+        //Given
+        //When
+        testGameController.playCard(99);
+
+        //Then
+        assertEquals(GameState.LOBBY, testGameController.getGameState());
+    }
+
+    @Test
+    public void testPlayCardValid() {
+        //Given
+        testGameController.getCardsInPlay();
+        //When
+        testGameController.playCard(1);
+
+        //Then
+        assertEquals(GameState.SPECIAL, testGameController.getGameState());
     }
 }

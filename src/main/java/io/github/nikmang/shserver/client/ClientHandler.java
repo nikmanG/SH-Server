@@ -1,17 +1,18 @@
 package io.github.nikmang.shserver.client;
 
 import io.github.nikmang.shserver.commands.CommandHandler;
-import io.github.nikmang.shserver.controllers.GameController;
-import io.github.nikmang.shserver.controllers.MessageController;
+import io.github.nikmang.shserver.game.GameController;
+import io.github.nikmang.shserver.MessageController;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
- * Runnable that is controlling each client thread.
+ * Runnable that is controlling each client thread.<br>
  * Also contains master set of users.
  */
 public class ClientHandler implements Runnable {
@@ -27,14 +28,33 @@ public class ClientHandler implements Runnable {
 
     static {
         users = new HashSet<>();
-        gameController = new GameController();
+        gameController = new GameController(5); //TODO: dynamically allocate it
         msgContoller = new MessageController(users);
         cmdHandler = new CommandHandler(msgContoller, gameController);
     }
 
-    //TODO: this only exists for testing, may need to change some stuff around
+    /**
+     * Retrieves an immutable set of current players.<br>
+     * TODO: this only exists for testing, may need to change some stuff around.
+     *
+     * @return Immutable hashset of the players in the game.
+     */
     public static Set<User> getUsers() {
         return Collections.unmodifiableSet(users);
+    }
+
+    /**
+     * Retrieves a user by their username. The name is case insensitive.
+     *
+     * @param userName User name of targeted user.
+     * @return {@link User} object of the target. <b>null</b> if no player found.
+     */
+    public static User getUserByName(String userName) {
+        return ClientHandler
+                .getUsers()
+                .stream()
+                .filter(x -> x.getName().equalsIgnoreCase(userName))
+                .findFirst().orElse(null);
     }
 
     public ClientHandler(Socket socket) {
@@ -51,10 +71,14 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * Runs the main loop between server and client.
+     */
     public void run() {
         try {
             String name;
-
+            msgContoller.sendMessageAsServer(user, "Welcome to Secret Hitler Chat Edition.\n" +
+                    "Original game by Goat, Wolf, & Cabbage: https://www.secrethitler.com/", true);
             msgContoller.sendMessageAsServer(user, "Enter your username", false);
             // Adding user to server
             do {

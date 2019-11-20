@@ -1,8 +1,8 @@
 package io.github.nikmang.shserver.commands;
 
 import io.github.nikmang.shserver.client.User;
-import io.github.nikmang.shserver.controllers.GameController;
-import io.github.nikmang.shserver.controllers.MessageController;
+import io.github.nikmang.shserver.game.GameController;
+import io.github.nikmang.shserver.MessageController;
 import io.github.nikmang.shserver.game.Card;
 import io.github.nikmang.shserver.client.ClientHandler;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * Called on /draw to draw cards.
  * Performs president and chancellor checks.
  */
-public class DrawCards extends Command {
+class DrawCards extends Command {
 
 
     private GameController gameController;

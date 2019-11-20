@@ -2,7 +2,7 @@ package io.github.nikmang.shserver.game;
 
 /**
  * Current state of the game.
- * <b>SPECIAL</b> is during fascisct tile events e.g) president killing others.
+ * <b>SPECIAL</b> is during fascist tile events e.g) president killing others.
  */
 public enum GameState {
 
@@ -10,5 +10,6 @@ public enum GameState {
     END,
     VOTING,
     SPECIAL,
+    CARD_DROP,
     CARD_CHOICE
 }
