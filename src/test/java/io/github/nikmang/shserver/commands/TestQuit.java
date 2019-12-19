@@ -29,15 +29,13 @@ public class TestQuit {
 
         testUser = new User("test-user", null);
         testQuitCommand = new Quit(mockMessageController);
-
-        when(mockClientHandler.getUser()).thenReturn(testUser);
     }
 
     @Test
     public void testRunThrough() throws IOException {
         //Given
         //When
-        testQuitCommand.execute(mockClientHandler, new String[0]);
+        testQuitCommand.execute(testUser, new String[0]);
 
         //Then
         verify(mockMessageController, times(1))

@@ -51,7 +51,7 @@ public class TestDrawCards {
         when(mockGameController.getCardsInPlay()).thenReturn(Collections.singletonList(Card.LIBERAL));
 
         //When
-        testDrawCardsCommand.execute(mockClientHandler, new String[0]);
+        testDrawCardsCommand.execute(testUser, new String[0]);
 
         //Then
         verify(mockMessageController, times(1))
@@ -66,7 +66,7 @@ public class TestDrawCards {
         when(mockGameController.getPresident()).thenReturn(null);
 
         //When
-        testDrawCardsCommand.execute(mockClientHandler, new String[0]);
+        testDrawCardsCommand.execute(testUser, new String[0]);
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -83,7 +83,7 @@ public class TestDrawCards {
         when(mockGameController.getPresident()).thenReturn(new User("test-user2", null));
 
         //When
-        testDrawCardsCommand.execute(mockClientHandler, new String[0]);
+        testDrawCardsCommand.execute(testUser, new String[0]);
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -101,7 +101,7 @@ public class TestDrawCards {
                 .thenReturn(Arrays.asList(Card.LIBERAL, Card.FASCIST, Card.LIBERAL));
 
         //When
-        testDrawCardsCommand.execute(mockClientHandler, new String[0]);
+        testDrawCardsCommand.execute(testUser, new String[0]);
 
         //Then
         verify(mockMessageController, times(1))

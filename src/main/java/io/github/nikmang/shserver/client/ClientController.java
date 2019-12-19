@@ -51,12 +51,12 @@ public enum ClientController {
      * Attempts to register the user for the clienthandler with given name.
      *
      * @param clientHandler {@link ClientHandler} instance of the user requesting to register.
-     * @param user Attempts to add user to user list.
-     * @param name Chosen name of the player. Case sensitive.
      * @return <b>true</b> if name is alphanumeric (with optional underscore) and is unique to the game.
      */
-    public boolean attemptRegister(ClientHandler clientHandler, User user, String name) {
-        if(!name.matches("^\\w{1,16}$") || name.equalsIgnoreCase("SERVER") ) {
+    public boolean attemptRegister(ClientHandler clientHandler) {
+        User user = clientHandler.getUser();
+
+        if(!user.getName().matches("^\\w{1,16}$") || user.getName().equalsIgnoreCase("SERVER") ) {
             return false;
         }
 
@@ -88,7 +88,7 @@ public enum ClientController {
      * @throws IOException If clienthandler has closed output stream.
      */
     public void executeCommand(ClientHandler clientHandler, String cmd) throws IOException {
-        cmdHandler.runCommand(clientHandler, cmd);
+        cmdHandler.runCommand(clientHandler.getUser(), cmd);
     }
 
     public synchronized void closeConnection(User user) {

@@ -14,7 +14,7 @@ import java.util.Set;
  * Runnable that is controlling each client thread.<br>
  * Also contains master set of users.
  */
-class ClientHandler implements Runnable {
+public class ClientHandler implements Runnable {
     private MessageController msgController;
     private Socket socket;
     private User user;
@@ -96,10 +96,10 @@ class ClientHandler implements Runnable {
      * @param name Chosen name of the player. Case sensitive.
      * @return <b>true</b> if name is alphanumeric (with optional underscore) and is unique to the game.
      */
-    private boolean attemptRegister(String name) {
+    boolean attemptRegister(String name) {
         user.setName(name);
 
-        return ClientController.INSTANCE.attemptRegister(this, user, name);
+        return ClientController.INSTANCE.attemptRegister(this);
     }
 
     /**

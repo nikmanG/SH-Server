@@ -49,7 +49,7 @@ public class TestInspectPartyCard {
         when(mockGameController.getGameState()).thenReturn(GameState.VOTING);
 
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[]{"test_user"});
+        testInspectPartCardCommand.execute(testUser, new String[]{"test_user"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -67,7 +67,7 @@ public class TestInspectPartyCard {
         when(mockGameController.getPresident()).thenReturn(new User("not_user", null));
 
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[]{"test_user"});
+        testInspectPartCardCommand.execute(testUser, new String[]{"test_user"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -82,7 +82,7 @@ public class TestInspectPartyCard {
     public void testNoArgumentsPosted() throws IOException {
         //Given
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[0]);
+        testInspectPartCardCommand.execute(testUser, new String[0]);
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -97,7 +97,7 @@ public class TestInspectPartyCard {
     public void testGetSelfParty() throws IOException {
         //Given
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[]{"test-USER"});
+        testInspectPartCardCommand.execute(testUser, new String[]{"test-USER"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -114,7 +114,7 @@ public class TestInspectPartyCard {
         when(mockGameController.inspectUserPartyCard(any())).thenReturn(Party.NONE);
 
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[]{"new_user"});
+        testInspectPartCardCommand.execute(testUser, new String[]{"new_user"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -131,7 +131,7 @@ public class TestInspectPartyCard {
         when(mockGameController.inspectUserPartyCard(any())).thenReturn(Party.LIBERAL);
 
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[]{"new_user"});
+        testInspectPartCardCommand.execute(testUser, new String[]{"new_user"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
