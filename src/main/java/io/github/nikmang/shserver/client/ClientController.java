@@ -5,6 +5,7 @@ import io.github.nikmang.shserver.game.GameController;
 import io.github.nikmang.shserver.messaging.MessageController;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.util.*;
 
 public enum ClientController {
@@ -16,11 +17,22 @@ public enum ClientController {
     private final CommandHandler cmdHandler;
     private final GameController gameController;
 
-    ClientController(){
+    ClientController() {
         users = new HashMap<>();
         gameController = new GameController(5); //TODO: dynamically allocate it
         msgContoller = new MessageController(users.keySet());
         cmdHandler = new CommandHandler(msgContoller, gameController);
+    }
+
+    /**
+     * Creates a new client handler.
+     *
+     * @param socket Socket of the incoming connection.
+     *
+     * @return Runnable that is of type {@link ClientHandler}.
+     */
+    public Runnable createClientHandler(Socket socket) {
+        return new ClientHandler(socket);
     }
 
     /**

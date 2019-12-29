@@ -18,8 +18,16 @@ Version _0.0.4_ should be first where everything gets glued together.
 
 ## 0.0.3
 ### Current State
+Not much changed externally from 0.0.2. Unfortunately not much time to work on the project so going to cut losses on this version and move to 0.0.4.
 
 ### Notes
 - Added a [TARGETS.md](TARGETS.md) file that lays out what I want to achieve in this version. 
 This should prevent the 0.0.2 issue of sporadic features getting added but having more structure.
 This is in lieu of a proper tickets system that for a one man project may not be worth it.
+- Actually managed to set internal API to be a bit better in terms of communication between packages (most happens through controller classes).
+-Did not touch integration tests.
+- Got UML diagrams working finally!
+
+## 0.0.4
+### Current State
+### Notes

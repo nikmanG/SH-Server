@@ -31,7 +31,7 @@ public class User {
      * @return Political party of user.
      */
     public Party getPoliticalParty() {
-        if(politicalParty == Party.HITLER)
+        if (politicalParty == Party.HITLER)
             return Party.FASCIST;
 
         return politicalParty;
@@ -76,7 +76,7 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if(!(o instanceof User))
+        if (!(o instanceof User))
             return false;
 
         return this.name.equalsIgnoreCase(((User) o).getName());

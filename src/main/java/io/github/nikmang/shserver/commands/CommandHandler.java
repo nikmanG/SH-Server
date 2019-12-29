@@ -21,7 +21,7 @@ public class CommandHandler {
      * Constructor to CommandHandler.
      *
      * @param messageController Main instance of message controller used in the game.
-     * @param gameController Main instance of game controller used in game.
+     * @param gameController    Main instance of game controller used in game.
      */
     public CommandHandler(MessageController messageController, GameController gameController) {
         cmds = new HashMap<>();
@@ -38,8 +38,7 @@ public class CommandHandler {
      * Attempts to run a command server-side and returns JSON response (if applicable) to the sender.
      *
      * @param user User object of the sender.
-     * @param cmd Command without the preceding slash.
-     *
+     * @param cmd  Command without the preceding slash.
      * @throws IOException thrown if receiver of message cannot receive it.
      */
     public void runCommand(User user, String cmd) throws IOException {

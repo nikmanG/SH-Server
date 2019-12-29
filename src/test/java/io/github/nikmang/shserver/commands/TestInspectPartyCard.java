@@ -1,7 +1,7 @@
 package io.github.nikmang.shserver.commands;
 
+import io.github.nikmang.shserver.client.ClientController;
 import io.github.nikmang.shserver.messaging.MessageController;
-import io.github.nikmang.shserver.client.ClientHandler;
 import io.github.nikmang.shserver.client.Party;
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.GameController;
@@ -23,7 +23,6 @@ import static org.mockito.Mockito.times;
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class TestInspectPartyCard {
 
-    private ClientHandler mockClientHandler;
     private MessageController mockMessageController;
     private GameController mockGameController;
     private InspectPartyCard testInspectPartCardCommand;
@@ -31,7 +30,6 @@ public class TestInspectPartyCard {
 
     @BeforeEach
     public void setup() {
-        mockClientHandler = mock(ClientHandler.class);
         mockMessageController = mock(MessageController.class);
         mockGameController = mock(GameController.class);
 
@@ -40,7 +38,6 @@ public class TestInspectPartyCard {
 
         when(mockGameController.getPresident()).thenReturn(testUser);
         when(mockGameController.getGameState()).thenReturn(GameState.SPECIAL);
-        when(mockClientHandler.getUser()).thenReturn(testUser);
     }
 
     @Test

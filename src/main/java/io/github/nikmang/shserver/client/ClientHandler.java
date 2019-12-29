@@ -1,27 +1,23 @@
 package io.github.nikmang.shserver.client;
 
-import io.github.nikmang.shserver.commands.CommandHandler;
-import io.github.nikmang.shserver.game.GameController;
 import io.github.nikmang.shserver.messaging.MessageController;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Runnable that is controlling each client thread.<br>
  * Also contains master set of users.
  */
-public class ClientHandler implements Runnable {
+class ClientHandler implements Runnable {
     private MessageController msgController;
     private Socket socket;
     private User user;
     private boolean enabled;
     private DataInputStream input;
 
-    public ClientHandler(Socket socket) {
+    ClientHandler(Socket socket) {
         this.socket = socket;
         this.enabled = true;
         this.msgController = ClientController.INSTANCE.getMessageController();
@@ -86,7 +82,7 @@ public class ClientHandler implements Runnable {
      *
      * @return user instance.
      */
-    public User getUser() {
+    User getUser() {
         return user;
     }
 

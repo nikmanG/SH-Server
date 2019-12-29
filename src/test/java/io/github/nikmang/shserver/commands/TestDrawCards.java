@@ -1,10 +1,10 @@
 package io.github.nikmang.shserver.commands;
 
+import io.github.nikmang.shserver.client.ClientController;
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.GameController;
 import io.github.nikmang.shserver.messaging.MessageController;
 import io.github.nikmang.shserver.game.Card;
-import io.github.nikmang.shserver.client.ClientHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,6 @@ import static org.mockito.Mockito.times;
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class TestDrawCards {
 
-    private ClientHandler mockClientHandler;
     private MessageController mockMessageController;
     private GameController mockGameController;
     private DrawCards testDrawCardsCommand;
@@ -33,14 +32,12 @@ public class TestDrawCards {
 
     @BeforeEach
     public void setup() {
-        mockClientHandler = mock(ClientHandler.class);
         mockMessageController = mock(MessageController.class);
         mockGameController = mock(GameController.class);
 
         testUser = new User("test-user", null);
         testDrawCardsCommand = new DrawCards(mockMessageController, mockGameController);
 
-        when(mockClientHandler.getUser()).thenReturn(testUser);
         when(mockGameController.getPresident()).thenReturn(testUser);
         when(mockGameController.getChancellor()).thenReturn(testUser);
     }

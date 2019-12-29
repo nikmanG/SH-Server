@@ -2,7 +2,6 @@ package io.github.nikmang.shserver.commands;
 
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.messaging.MessageController;
-import io.github.nikmang.shserver.client.ClientHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,14 +16,12 @@ import static org.mockito.Mockito.times;
 @ExtendWith(MockitoExtension.class)
 public class TestQuit {
 
-    private ClientHandler mockClientHandler;
     private MessageController mockMessageController;
     private Quit testQuitCommand;
     private User testUser;
 
     @BeforeEach
     public void setup() {
-        mockClientHandler = mock(ClientHandler.class);
         mockMessageController = mock(MessageController.class);
 
         testUser = new User("test-user", null);

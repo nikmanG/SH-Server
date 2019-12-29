@@ -1,7 +1,7 @@
 package io.github.nikmang.shserver.commands;
 
+import io.github.nikmang.shserver.client.ClientController;
 import io.github.nikmang.shserver.messaging.MessageController;
-import io.github.nikmang.shserver.client.ClientHandler;
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.Card;
 import io.github.nikmang.shserver.game.GameController;
@@ -28,18 +28,14 @@ public class TestDropCard {
     private DropCard testDropCard;
     private User mockSender;
     private MessageController mockMessageController;
-    private ClientHandler mockClientHandler;
     private GameController mockGameController;
 
     @BeforeEach
     public void setup() {
-        mockClientHandler = mock(ClientHandler.class);
         mockMessageController = mock(MessageController.class);
         mockGameController = mock(GameController.class);
         mockSender = new User("SENDER", null);
         testDropCard = new DropCard(mockMessageController, mockGameController);
-
-        when(mockClientHandler.getUser()).thenReturn(mockSender);
 
         when(mockGameController.getPresident()).thenReturn(mockSender);
         when(mockGameController.getGameState()).thenReturn(GameState.CARD_CHOICE);

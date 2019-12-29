@@ -1,11 +1,9 @@
 package io.github.nikmang.shserver.commands;
 
 import io.github.nikmang.shserver.client.User;
-import io.github.nikmang.shserver.messaging.MessageController;
 import io.github.nikmang.shserver.game.GameController;
 import io.github.nikmang.shserver.game.GameState;
-
-import java.io.IOException;
+import io.github.nikmang.shserver.messaging.MessageController;
 
 /**
  * Executed by president to drop a card out of the choice of <b>3</b> cards.
@@ -24,7 +22,7 @@ class DropCard extends Command {
     }
 
     @Override
-    public void execute(User user, String[] args) throws IOException {
+    public void execute(User user, String[] args) {
         if(!gameController.getPresident().equals(user)) {
             getMessageController().sendMessageAsServer(
                     user,

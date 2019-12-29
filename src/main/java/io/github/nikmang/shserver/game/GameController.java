@@ -1,6 +1,5 @@
 package io.github.nikmang.shserver.game;
 
-import io.github.nikmang.shserver.client.ClientHandler;
 import io.github.nikmang.shserver.client.Party;
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.configurations.PlayerConfigurationFactory;
@@ -30,7 +29,7 @@ public class GameController {
      *
      * @param playerCount Amount of players in the game.
      */
-    public GameController(int playerCount){
+    public GameController(int playerCount) {
         gameDeck = new GameDeck();
         gameBoard = new GameBoard(PlayerConfigurationFactory.getConfigurationOnPlayerCount(playerCount));
         gameState = GameState.LOBBY;
@@ -45,7 +44,7 @@ public class GameController {
      * @return unmodifiable list of current cards in play.
      */
     public List<Card> getCardsInPlay() {
-        if(cardsInPlay.isEmpty()) {
+        if (cardsInPlay.isEmpty()) {
             cardsInPlay = gameDeck.getCards(3);
         }
 
@@ -60,7 +59,7 @@ public class GameController {
      * @return <b>true</b> if index corresponded to a card and could be removed.
      */
     public boolean removeCardFromPlay(int index) {
-        if(index >= cardsInPlay.size() || index < 0)
+        if (index >= cardsInPlay.size() || index < 0)
             return false;
 
         Card c = cardsInPlay.remove(index);
@@ -74,12 +73,12 @@ public class GameController {
     /**
      * Play a card and update active effect.
      * If successful, sets the game state to {@link GameState#SPECIAL}.
-     * 
+     *
      * @param index Index of the card that is found in {@link #getCardsInPlay()}.
      * @return The {@link GameBoardEffect} for given play.
      */
     public GameBoardEffect playCard(int index) {
-        if(index < cardsInPlay.size() && index > 0) {
+        if (index < cardsInPlay.size() && index > 0) {
             Card c = cardsInPlay.remove(index);
 
             currentEffect = gameBoard.playPiece(c);
@@ -91,14 +90,14 @@ public class GameController {
 
     /**
      * Gets the political party of a given user.
-     * Search for name using {@link ClientHandler#getUserByName(String)}.
+     * Search for name using {@link io.github.nikmang.shserver.client.ClientController#getUserByName(String)}.
      * Transitions game state to {@link GameState#VOTING}.
      *
      * @param user the target user for the action.
      * @return {@link Party} of target user. If no user found then {@link Party#NONE} is returned.
      */
     public Party inspectUserPartyCard(User user) {
-        if(user != null) {
+        if (user != null) {
             gameState = GameState.VOTING;
             return user.getPoliticalParty();
         }
@@ -138,18 +137,14 @@ public class GameController {
         return chancellor;
     }
 
-    public GameBoard getGameBoard() {
-        return gameBoard;
-    }
-
     private boolean setPositionOfPower(User user, Consumer<User> action) {
-        if(president != null) {
-            if(user.equals(president))
+        if (president != null) {
+            if (user.equals(president))
                 return false;
         }
 
-        if(chancellor != null) {
-            if(chancellor.equals(user))
+        if (chancellor != null) {
+            if (chancellor.equals(user))
                 return false;
         }
 

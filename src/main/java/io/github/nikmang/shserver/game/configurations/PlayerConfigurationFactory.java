@@ -7,7 +7,8 @@ import io.github.nikmang.shserver.game.GameBoardEffect;
  */
 public class PlayerConfigurationFactory {
 
-    private PlayerConfigurationFactory (){ }
+    private PlayerConfigurationFactory() {
+    }
 
     /**
      * Gets the player configuration based on player count.
@@ -18,17 +19,17 @@ public class PlayerConfigurationFactory {
     public static PlayerConfiguration getConfigurationOnPlayerCount(int playerCount) {
         PlayerConfiguration config;
 
-        if(playerCount <= 6) {
+        if (playerCount <= 6) {
             config = new PlayerConfiguration(
-              true,
-                    playerCount-2,
+                    true,
+                    playerCount - 2,
                     2);
 
             config.addGameEffect(3, GameBoardEffect.SEE_TOP_CARDS);
-        } else if(playerCount <= 8) {
+        } else if (playerCount <= 8) {
             config = new PlayerConfiguration(
                     false,
-                    playerCount-3,
+                    playerCount - 3,
                     3);
 
             config.addGameEffect(2, GameBoardEffect.SEE_PARTY_CARD);
@@ -36,7 +37,7 @@ public class PlayerConfigurationFactory {
         } else {
             config = new PlayerConfiguration(
                     false,
-                    playerCount-4,
+                    playerCount - 4,
                     4);
 
             config.addGameEffect(1, GameBoardEffect.SEE_PARTY_CARD);
