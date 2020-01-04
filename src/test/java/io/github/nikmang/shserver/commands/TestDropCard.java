@@ -1,7 +1,7 @@
 package io.github.nikmang.shserver.commands;
 
-import io.github.nikmang.shserver.MessageController;
-import io.github.nikmang.shserver.client.ClientHandler;
+import io.github.nikmang.shserver.client.ClientController;
+import io.github.nikmang.shserver.messaging.MessageController;
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.Card;
 import io.github.nikmang.shserver.game.GameController;
@@ -28,18 +28,14 @@ public class TestDropCard {
     private DropCard testDropCard;
     private User mockSender;
     private MessageController mockMessageController;
-    private ClientHandler mockClientHandler;
     private GameController mockGameController;
 
     @BeforeEach
     public void setup() {
-        mockClientHandler = mock(ClientHandler.class);
         mockMessageController = mock(MessageController.class);
         mockGameController = mock(GameController.class);
         mockSender = new User("SENDER", null);
         testDropCard = new DropCard(mockMessageController, mockGameController);
-
-        when(mockClientHandler.getUser()).thenReturn(mockSender);
 
         when(mockGameController.getPresident()).thenReturn(mockSender);
         when(mockGameController.getGameState()).thenReturn(GameState.CARD_CHOICE);
@@ -53,7 +49,7 @@ public class TestDropCard {
         when(mockGameController.getPresident()).thenReturn(new User("NOT SENDER", null));
 
         //When
-        testDropCard.execute(mockClientHandler, new String[0]);
+        testDropCard.execute(mockSender, new String[0]);
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -72,7 +68,7 @@ public class TestDropCard {
         when(mockGameController.getGameState()).thenReturn(GameState.VOTING);
 
         //When
-        testDropCard.execute(mockClientHandler, new String[0]);
+        testDropCard.execute(mockSender, new String[0]);
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -90,7 +86,7 @@ public class TestDropCard {
         when(mockGameController.getCardsInPlay()).thenReturn(Collections.emptyList());
 
         //When
-        testDropCard.execute(mockClientHandler, new String[0]);
+        testDropCard.execute(mockSender, new String[0]);
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -105,7 +101,7 @@ public class TestDropCard {
     public void testNoArguments() throws IOException {
         //Given
         //When
-        testDropCard.execute(mockClientHandler, new String[0]);
+        testDropCard.execute(mockSender, new String[0]);
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -120,7 +116,7 @@ public class TestDropCard {
     public void testNotNumber() throws IOException {
         //Given
         //When
-        testDropCard.execute(mockClientHandler, new String[]{"a"});
+        testDropCard.execute(mockSender, new String[]{"a"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -137,7 +133,7 @@ public class TestDropCard {
         when(mockGameController.removeCardFromPlay(-6)).thenReturn(false);
 
         //When
-        testDropCard.execute(mockClientHandler, new String[]{"-5"});
+        testDropCard.execute(mockSender, new String[]{"-5"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -155,7 +151,7 @@ public class TestDropCard {
         when(mockGameController.getChancellor()).thenReturn(chancellor);
 
         //When
-        testDropCard.execute(mockClientHandler, new String[]{"2"});
+        testDropCard.execute(mockSender, new String[]{"2"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(

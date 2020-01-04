@@ -1,6 +1,5 @@
-package io.github.nikmang.shserver;
+package io.github.nikmang.shserver.messaging;
 
-import io.github.nikmang.shserver.client.JsonPacketBuilder;
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.Card;
 
@@ -33,7 +32,7 @@ public class MessageController {
     /**
      * Broadcasts message with sender name included to all users connected.
      *
-     * @param sender The sender of the message.
+     * @param sender  The sender of the message.
      * @param message Message to be sent as the server.
      */
     public void broadcast(User sender, String message) {
@@ -43,9 +42,9 @@ public class MessageController {
     /**
      * Send message to particular user as an individual sender.
      *
-     * @param sender User who is sending the message.
+     * @param sender    User who is sending the message.
      * @param recipient The user who is the targeted recipient of the message.
-     * @param message The actual string message.
+     * @param message   The actual string message.
      */
     public void sendMessage(User sender, User recipient, String message) {
         sendMessage(sender.getName(), recipient, message, false);
@@ -56,8 +55,8 @@ public class MessageController {
      * Send message to particular user as the SERVER user.
      *
      * @param recipient The user who is the targeted recipient of the message.
-     * @param message The actual string message.
-     * @param headless If <b>true</b> then "SERVER" as name will not be sent.
+     * @param message   The actual string message.
+     * @param headless  If <b>true</b> then "SERVER" as name will not be sent.
      */
     public void sendMessageAsServer(User recipient, String message, boolean headless) {
         sendMessage("SERVER", recipient, message, headless);
@@ -68,14 +67,14 @@ public class MessageController {
      * If message is set as <i>null</i> then there will be no accompanying message or sender.
      *
      * @param recipient User that will receive the card information.
-     * @param cards The cards that are to be sent.
-     * @param message Optional accompanying message.
+     * @param cards     The cards that are to be sent.
+     * @param message   Optional accompanying message.
      */
     public void sendCards(User recipient, List<Card> cards, String message) {
         JsonPacketBuilder packet = new JsonPacketBuilder()
                 .withFollowingCards(cards);
 
-        if(message != null) {
+        if (message != null) {
             packet.withMessage(message).withSender("SERVER");
         }
 
@@ -96,7 +95,7 @@ public class MessageController {
         JsonPacketBuilder packet = new JsonPacketBuilder()
                 .withFollowingUsers(users.stream().map(User::getName).collect(Collectors.toList()));
 
-        if(message != null) {
+        if (message != null) {
             packet.withMessage(message).withSender("SERVER");
         }
 

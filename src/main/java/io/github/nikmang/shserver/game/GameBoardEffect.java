@@ -9,5 +9,5 @@ public enum GameBoardEffect {
     CHOOSE_NEXT_PRESIDENT,
     KILL,
     SEE_PARTY_CARD,
-    SEE_TOP_CARDS;
+    SEE_TOP_CARDS
 }

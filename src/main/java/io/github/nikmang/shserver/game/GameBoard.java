@@ -6,7 +6,7 @@ import io.github.nikmang.shserver.game.configurations.PlayerConfiguration;
 /**
  * The gameboard instance used for playing and keeping track of various positions.
  */
-public class GameBoard {
+class GameBoard {
 
     private transient final int targetLiberal;
     private transient final int targetFascist;
@@ -23,7 +23,7 @@ public class GameBoard {
      *
      * @param config Player configuration, should be based on player count.
      */
-    public GameBoard(PlayerConfiguration config){
+    GameBoard(PlayerConfiguration config) {
         this.config = config;
 
         targetFascist = 6;
@@ -45,7 +45,7 @@ public class GameBoard {
     GameBoardEffect playPiece(Card card) {
         deadlock = 0;
 
-        if(card == Card.LIBERAL) {
+        if (card == Card.LIBERAL) {
             liberalCount++;
             return GameBoardEffect.NONE;
         } else {
@@ -57,17 +57,18 @@ public class GameBoard {
     /**
      * Get the winner for the game.<br>
      * Based on if current card played count is equal to the target count.<br>
-     *<br>
+     * <br>
      * For statistical purposes {@link Party#HITLER} is also a winner if {@link Party#FASCIST} wins.<br>
      * Otherwise {@link Party#NONE} is returned.<br>
-     *<br>
+     * <br>
+     *
      * @return Party of the winner of the game.
      */
-    public Party getWinner() {
-        if(fascistCount == targetFascist)
+    Party getWinner() {
+        if (fascistCount == targetFascist)
             return Party.FASCIST;
 
-        if(liberalCount == targetLiberal)
+        if (liberalCount == targetLiberal)
             return Party.LIBERAL;
 
         return Party.NONE;
@@ -78,7 +79,7 @@ public class GameBoard {
      *
      * @return current deadlock count.
      */
-    public int getDeadlockCount() {
+    int getDeadlockCount() {
         return deadlock;
     }
 

@@ -1,11 +1,9 @@
 package io.github.nikmang.shserver.commands;
 
-import io.github.nikmang.shserver.MessageController;
-import io.github.nikmang.shserver.client.ClientHandler;
+import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.GameController;
 import io.github.nikmang.shserver.game.GameState;
-
-import java.io.IOException;
+import io.github.nikmang.shserver.messaging.MessageController;
 
 /**
  * Executed by president to drop a card out of the choice of <b>3</b> cards.
@@ -24,10 +22,10 @@ class DropCard extends Command {
     }
 
     @Override
-    public void execute(ClientHandler clientHandler, String[] args) throws IOException {
-        if(!gameController.getPresident().equals(clientHandler.getUser())) {
+    public void execute(User user, String[] args) {
+        if(!gameController.getPresident().equals(user)) {
             getMessageController().sendMessageAsServer(
-                    clientHandler.getUser(),
+                    user,
                     "You must be president to drop cards.",
                     false);
 
@@ -36,7 +34,7 @@ class DropCard extends Command {
 
         if(gameController.getGameState() != GameState.CARD_CHOICE) {
             getMessageController().sendMessageAsServer(
-                    clientHandler.getUser(),
+                    user,
                     "Wait until chancellor is set.",
                     false);
 
@@ -45,7 +43,7 @@ class DropCard extends Command {
 
         if(gameController.getCardsInPlay().size() != 3) {
             getMessageController().sendMessageAsServer(
-                    clientHandler.getUser(),
+                    user,
                     "Cards have already been dropped. Cannot drop cards again.",
                     false);
 
@@ -54,7 +52,7 @@ class DropCard extends Command {
 
         if(args.length < 1) {
             getMessageController().sendMessageAsServer(
-                    clientHandler.getUser(),
+                    user,
                     "Need to supply the index of the card you wish to drop.",
                     false);
 
@@ -66,7 +64,7 @@ class DropCard extends Command {
 
             if(gameController.removeCardFromPlay(index-1)) {
                 getMessageController().sendMessageAsServer(
-                        clientHandler.getUser(),
+                        user,
                         String.format("You have removed the %d card from the deck.", index),
                         false);
 
@@ -81,13 +79,13 @@ class DropCard extends Command {
                         "Please choose which one to play.");
             } else {
                 getMessageController().sendMessageAsServer(
-                        clientHandler.getUser(),
+                        user,
                         "Need to supply the index that's 1, 2 or 3.",
                         false);
             }
         } catch (NumberFormatException e) {
             getMessageController().sendMessageAsServer(
-                    clientHandler.getUser(),
+                    user,
                     "Need to supply the index of the card you wish to drop.",
                     false);
 

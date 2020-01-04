@@ -31,7 +31,7 @@ public class GameDeck {
     /**
      * Gets an individual card from top of the deck.
      * If no cards in deck, deck is regenerated.
-     *
+     * <p>
      * The card is polled from the deck hence to return it, you will need to call {@link #addCardToDiscardPile(Card)}.
      *
      * @return Card from top of the deck.
@@ -40,7 +40,7 @@ public class GameDeck {
         //TODO: this may become a private method
         Card card = cardDeck.pollFirst();
 
-        if(cardDeck.size() < 3)
+        if (cardDeck.size() < 3)
             generateDeck();
 
         return card;
@@ -49,21 +49,21 @@ public class GameDeck {
     /**
      * Retrieve specified amount of cards.
      * If amount requested is less than remaining deck size, deck is regenerated.
-     *
+     * <p>
      * The card is polled from the deck hence to return it, you will need to call {@link #addCardToDiscardPile(Card)}.
      *
      * @param amount Amount of cards requested to be retrieved.
      * @return List of cards in order that they appear on top of the deck.
      */
     public List<Card> getCards(int amount) {
-        if(amount > cardDeck.size())
+        if (amount > cardDeck.size())
             generateDeck();
 
         List<Card> cards = new LinkedList<>();
 
         int deckSize = cardDeck.size();
 
-        for(int i=0; i<Math.min(amount, deckSize); i++) {
+        for (int i = 0; i < Math.min(amount, deckSize); i++) {
             cards.add(getCard());
         }
 
@@ -85,7 +85,7 @@ public class GameDeck {
         List<Card> tempList = new ArrayList<>();
 
         // This should only occur once per game, but could throw it into a separate method if need be
-        if(discardPile.isEmpty() && cardDeck.isEmpty()) {
+        if (discardPile.isEmpty() && cardDeck.isEmpty()) {
             for (int i = 0; i < liberalCards; i++) {
                 tempList.add(Card.LIBERAL);
             }

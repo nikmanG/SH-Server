@@ -1,8 +1,7 @@
-package io.github.nikmang.shserver.client;
+package io.github.nikmang.shserver.messaging;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.github.nikmang.shserver.MessageController;
 import io.github.nikmang.shserver.game.Card;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class JsonPacketBuilder {
     private List<Card> cards;
     private List<String> users;
 
-    public JsonPacketBuilder(){
+    public JsonPacketBuilder() {
         GsonBuilder jsonBuilder = new GsonBuilder().setPrettyPrinting();
         gson = jsonBuilder.create();
     }
@@ -54,7 +53,7 @@ public class JsonPacketBuilder {
 
     @Override
     public boolean equals(Object o) {
-        if(!(o instanceof  JsonPacketBuilder))
+        if (!(o instanceof JsonPacketBuilder))
             return false;
 
         JsonPacketBuilder other = (JsonPacketBuilder) o;

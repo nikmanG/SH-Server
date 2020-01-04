@@ -21,10 +21,10 @@ public class PlayerConfiguration {
      * By default has spaces 4 and 5 on fascist board set to {@link GameBoardEffect#KILL}.
      *
      * @param hitlerKnowsFascists If hitler knows who the fascists are in the game.
-     * @param liberalCount Amount of liberals that are in the game.
-     * @param fascistCount Amount of fascists that are in the game.
+     * @param liberalCount        Amount of liberals that are in the game.
+     * @param fascistCount        Amount of fascists that are in the game.
      */
-    public PlayerConfiguration(
+    PlayerConfiguration(
             boolean hitlerKnowsFascists,
             int liberalCount,
             int fascistCount) {
@@ -53,12 +53,11 @@ public class PlayerConfiguration {
      * Add game effect for placing card on the xth location.
      *
      * @param location Where the effect will take place.
-     * @param effect What the effect will be.
-     *
+     * @param effect   What the effect will be.
      * @return <b>false</b> if location already has an effect. <b>true</b> if effect was added.
      */
     public boolean addGameEffect(int location, GameBoardEffect effect) {
-        if(placeEffects.containsKey(location))
+        if (placeEffects.containsKey(location))
             return false;
 
         placeEffects.put(location, effect);

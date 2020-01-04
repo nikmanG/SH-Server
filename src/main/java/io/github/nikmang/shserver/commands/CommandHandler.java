@@ -1,8 +1,8 @@
 package io.github.nikmang.shserver.commands;
 
+import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.GameController;
-import io.github.nikmang.shserver.MessageController;
-import io.github.nikmang.shserver.client.ClientHandler;
+import io.github.nikmang.shserver.messaging.MessageController;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public class CommandHandler {
      * Constructor to CommandHandler.
      *
      * @param messageController Main instance of message controller used in the game.
-     * @param gameController Main instance of game controller used in game.
+     * @param gameController    Main instance of game controller used in game.
      */
     public CommandHandler(MessageController messageController, GameController gameController) {
         cmds = new HashMap<>();
@@ -37,16 +37,15 @@ public class CommandHandler {
     /**
      * Attempts to run a command server-side and returns JSON response (if applicable) to the sender.
      *
-     * @param handler Handler of the sender.
-     * @param cmd Command without the preceding slash.
-     *
+     * @param user User object of the sender.
+     * @param cmd  Command without the preceding slash.
      * @throws IOException thrown if receiver of message cannot receive it.
      */
-    public void runCommand(ClientHandler handler, String cmd) throws IOException {
+    public void runCommand(User user, String cmd) throws IOException {
         String[] parts = cmd.split("\\s");
 
         Command target = cmds.getOrDefault(parts[0].substring(1), invalid);
 
-        target.execute(handler, Arrays.stream(parts).filter(x -> !x.equals(parts[0])).toArray(String[]::new));
+        target.execute(user, Arrays.stream(parts).filter(x -> !x.equals(parts[0])).toArray(String[]::new));
     }
 }

@@ -1,7 +1,7 @@
 package io.github.nikmang.shserver.commands;
 
-import io.github.nikmang.shserver.MessageController;
-import io.github.nikmang.shserver.client.ClientHandler;
+import io.github.nikmang.shserver.client.ClientController;
+import io.github.nikmang.shserver.messaging.MessageController;
 import io.github.nikmang.shserver.client.Party;
 import io.github.nikmang.shserver.client.User;
 import io.github.nikmang.shserver.game.GameController;
@@ -23,7 +23,6 @@ import static org.mockito.Mockito.times;
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class TestInspectPartyCard {
 
-    private ClientHandler mockClientHandler;
     private MessageController mockMessageController;
     private GameController mockGameController;
     private InspectPartyCard testInspectPartCardCommand;
@@ -31,7 +30,6 @@ public class TestInspectPartyCard {
 
     @BeforeEach
     public void setup() {
-        mockClientHandler = mock(ClientHandler.class);
         mockMessageController = mock(MessageController.class);
         mockGameController = mock(GameController.class);
 
@@ -40,7 +38,6 @@ public class TestInspectPartyCard {
 
         when(mockGameController.getPresident()).thenReturn(testUser);
         when(mockGameController.getGameState()).thenReturn(GameState.SPECIAL);
-        when(mockClientHandler.getUser()).thenReturn(testUser);
     }
 
     @Test
@@ -49,7 +46,7 @@ public class TestInspectPartyCard {
         when(mockGameController.getGameState()).thenReturn(GameState.VOTING);
 
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[]{"test_user"});
+        testInspectPartCardCommand.execute(testUser, new String[]{"test_user"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -67,7 +64,7 @@ public class TestInspectPartyCard {
         when(mockGameController.getPresident()).thenReturn(new User("not_user", null));
 
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[]{"test_user"});
+        testInspectPartCardCommand.execute(testUser, new String[]{"test_user"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -82,7 +79,7 @@ public class TestInspectPartyCard {
     public void testNoArgumentsPosted() throws IOException {
         //Given
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[0]);
+        testInspectPartCardCommand.execute(testUser, new String[0]);
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -97,7 +94,7 @@ public class TestInspectPartyCard {
     public void testGetSelfParty() throws IOException {
         //Given
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[]{"test-USER"});
+        testInspectPartCardCommand.execute(testUser, new String[]{"test-USER"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -114,7 +111,7 @@ public class TestInspectPartyCard {
         when(mockGameController.inspectUserPartyCard(any())).thenReturn(Party.NONE);
 
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[]{"new_user"});
+        testInspectPartCardCommand.execute(testUser, new String[]{"new_user"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(
@@ -131,7 +128,7 @@ public class TestInspectPartyCard {
         when(mockGameController.inspectUserPartyCard(any())).thenReturn(Party.LIBERAL);
 
         //When
-        testInspectPartCardCommand.execute(mockClientHandler, new String[]{"new_user"});
+        testInspectPartCardCommand.execute(testUser, new String[]{"new_user"});
 
         //Then
         verify(mockMessageController, times(1)).sendMessageAsServer(

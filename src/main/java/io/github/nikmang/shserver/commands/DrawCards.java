@@ -1,12 +1,10 @@
 package io.github.nikmang.shserver.commands;
 
 import io.github.nikmang.shserver.client.User;
-import io.github.nikmang.shserver.game.GameController;
-import io.github.nikmang.shserver.MessageController;
 import io.github.nikmang.shserver.game.Card;
-import io.github.nikmang.shserver.client.ClientHandler;
+import io.github.nikmang.shserver.game.GameController;
+import io.github.nikmang.shserver.messaging.MessageController;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,9 +23,7 @@ class DrawCards extends Command {
     }
 
     @Override
-    public void execute(ClientHandler handler, String[] args) throws IOException {
-        User user = handler.getUser();
-
+    public void execute(User user, String[] args) {
         if (gameController.getPresident() == null || gameController.getChancellor() == null) {
             getMessageController().sendMessageAsServer(
                     user,

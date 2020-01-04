@@ -23,7 +23,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TestClientHandler {
+public class TestClientController {
 
     private static List<ClientHandler> clients;
     private ClientHandler testClientHandler;
@@ -43,7 +43,7 @@ public class TestClientHandler {
     public void tearDown() throws IOException {
         synchronized (clients) {
             for (ClientHandler c : clients) {
-                c.closeConnection();
+                ClientController.INSTANCE.closeConnection(c.getUser());
             }
         }
 
@@ -56,10 +56,10 @@ public class TestClientHandler {
         clients.add(testClientHandler);
 
         //When
-        testClientHandler.attemptRegister("test_user");
+        testClientHandler.attemptRegister("test");
 
         //Then
-        assertEquals(1, ClientHandler.getUsers().size());
+        assertEquals(1, ClientController.INSTANCE.getUsers().size());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class TestClientHandler {
         assertFalse(b2);
         assertFalse(b3);
 
-        assertEquals(0, ClientHandler.getUsers().size());
+        assertEquals(0, ClientController.INSTANCE.getUsers().size());
     }
 
     @Test
@@ -103,7 +103,7 @@ public class TestClientHandler {
         pool.awaitTermination(2000L, TimeUnit.MILLISECONDS);
 
         //Then
-        assertEquals(100, ClientHandler.getUsers().size());
+        assertEquals(100, ClientController.INSTANCE.getUsers().size());
     }
 
     @Test
@@ -129,7 +129,7 @@ public class TestClientHandler {
         pool.awaitTermination(2000L, TimeUnit.MILLISECONDS);
 
         //Then
-        assertEquals(1, ClientHandler.getUsers().size());
+        assertEquals(1, ClientController.INSTANCE.getUsers().size());
     }
 
     @Test
@@ -138,10 +138,10 @@ public class TestClientHandler {
         testClientHandler.attemptRegister("test_user");
 
         //When
-        testClientHandler.closeConnection();
+        ClientController.INSTANCE.closeConnection(testClientHandler.getUser());
 
         //Then
-        assertEquals(0, ClientHandler.getUsers().size());
+        assertEquals(0, ClientController.INSTANCE.getUsers().size());
     }
 
     @Test
@@ -162,11 +162,7 @@ public class TestClientHandler {
             final int nameItr = i;
 
             pool.execute(() -> {
-                try {
-                    clients.get(nameItr).closeConnection();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                ClientController.INSTANCE.closeConnection(clients.get(nameItr).getUser());
             });
         }
 
@@ -174,7 +170,7 @@ public class TestClientHandler {
         pool.awaitTermination(2000L, TimeUnit.MILLISECONDS);
 
         //Then
-        assertEquals(50, ClientHandler.getUsers().size());
+        assertEquals(50, ClientController.INSTANCE.getUsers().size());
     }
 
     @Test
@@ -188,8 +184,8 @@ public class TestClientHandler {
         }
 
         //When
-        User valid = ClientHandler.getUserByName("test_user1");
-        User invalid = ClientHandler.getUserByName("test_user100");
+        User valid = ClientController.INSTANCE.getUserByName("test_user1");
+        User invalid = ClientController.INSTANCE.getUserByName("test_user100");
 
         //Then
         assertNull(invalid);
