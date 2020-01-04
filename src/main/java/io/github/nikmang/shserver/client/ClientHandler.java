@@ -70,7 +70,6 @@ class ClientHandler implements Runnable {
             }
         } catch (IOException e) {
             System.out.printf("%s has logged off%n", user.getName());
-            e.printStackTrace();
         } finally {
             ClientController.INSTANCE.closeConnection(user);
             msgController.updateUserList(String.format("%s has left the server!", user.getName()));
